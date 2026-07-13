@@ -103,6 +103,10 @@ o cliccando **"+"** in chat/Cowork.
 
 ## Guida d'uso
 
+> 📖 **Sei alle prime armi o non hai mai usato un terminale?** C'è una
+> [**guida d'uso dettagliata passo-passo**](GUIDE.md) che costruisce un AIOS
+> d'esempio ("Studio Rossi") dall'inizio alla fine. Questa sezione è il riassunto.
+
 ### Avvio: costruire l'AIOS di un cliente
 
 1. **Crea una cartella dedicata al cliente** e aprici Claude Code:

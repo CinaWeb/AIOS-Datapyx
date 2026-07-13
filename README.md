@@ -36,6 +36,11 @@ I 5 livelli:
 4. **`aios-automation`** — Automazioni operative
 5. **`aios-dashboard`** — Dashboard di controllo
 
+Diagnostica trasversale:
+- **`datapyx`** — DataPyx Market Intelligence Assistant: diagnostico sistemico
+  per consulenti (problema reale, punti di leva, scenari, monitoraggio). Non è un
+  livello di build: è il cuore analitico, offerto dopo il Contesto e ripetibile.
+
 Dipendenze di brand (incluse per self-containment):
 - **`client-project-kickoff`** — scaffolding + brand identity (estrae da sito o
   **crea da zero via brandkit**)
@@ -45,6 +50,7 @@ Dipendenze di brand (incluse per self-containment):
 ```
 aios → aios-context, aios-data, aios-intel, aios-automation, aios-dashboard
 aios-context → client-project-kickoff → brandkit
+aios ─(offre dopo il Contesto)→ datapyx   [diagnostica trasversale, ripetibile]
 ```
 Le skill si richiamano **per nome/descrizione**: funzionano anche namespaced come
 `aios:aios-context`.
@@ -136,6 +142,7 @@ Una volta costruito l'AIOS, il lavoro di tutti i giorni nella cartella del clien
 | Aggiornare i dati | `/refresh-data` | Riscarica le metriche nel database |
 | Aggiornare le riunioni | `/collect-meetings` | Scarica i nuovi meeting |
 | Riprendere il filo | `/catchup` | Sintesi meeting recenti (decisioni, action item) |
+| Diagnosi/monitoraggio sfida | `datapyx` | Diagnostico sistemico: problema reale, leve, scenari, monitoraggio |
 | Automazioni | `/<nome-automazione>` | Es. `/crea-fattura` |
 | Pannello | `/dashboard` | Apre la dashboard localhost |
 | Fine sessione | `/commit` | Salva e versiona l'AIOS (se InfraOS attivo) |

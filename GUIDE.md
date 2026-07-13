@@ -88,6 +88,10 @@ a installarli — non pensarci ora.
 Digita `/` in chat: fra i comandi disponibili devono comparire `aios`, `datapyx`,
 `challenge`, ecc. Se li vedi, sei pronto.
 
+> 💡 **Da qualunque punto, scrivi `/aios-help`** per un riepilogo veloce di cosa
+> fa il plugin e di tutti i comandi. `/aios-help dati` (o un altro tema) va dritto
+> all'argomento e ti rimanda alla sezione giusta di questa guida.
+
 > **Aggiornare in futuro:** quando esce una versione nuova, basta
 > `/plugin marketplace update aios`.
 

@@ -26,7 +26,7 @@ Automazioni → Controllo**.
 
 ## Cosa contiene
 
-**8 skill + 1 comando (`/challenge`).** Entry point:
+**8 skill + 2 comandi (`/challenge`, `/aios-help`).** Entry point:
 - **`aios`** — orchestratore: rileva lo stato, mantiene una checklist persistente
   (`.claude/aios-build.md`), esegue i 5 livelli in ordine invocando le skill sotto.
 
@@ -106,6 +106,8 @@ o cliccando **"+"** in chat/Cowork.
 > 📖 **Sei alle prime armi o non hai mai usato un terminale?** C'è una
 > [**guida d'uso dettagliata passo-passo**](GUIDE.md) che costruisce un AIOS
 > d'esempio ("Studio Rossi") dall'inizio alla fine. Questa sezione è il riassunto.
+> Dentro Claude Code, il comando **`/aios-help`** dà lo stesso orientamento (e
+> `/aios-help <tema>` va dritto a un argomento, es. `/aios-help dati`).
 
 ### Avvio: costruire l'AIOS di un cliente
 

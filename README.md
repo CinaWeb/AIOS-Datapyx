@@ -62,11 +62,12 @@ Le skill si richiamano **per nome/descrizione**: funzionano anche namespaced com
 Su qualsiasi macchina con Claude Code, dopo aver pubblicato questa repo su GitHub:
 
 ```
-/plugin marketplace add <tuo-user>/aios-plugin
+/plugin marketplace add CinaWeb/AIOS-Datapyx
 /plugin install aios@aios
 ```
 
-Sostituisci `<tuo-user>/aios-plugin` con lo slug/URL della tua repo GitHub.
+Funziona sia da **CLI** sia dall'**app desktop** di Claude Code (stesso sistema
+di plugin).
 
 **Verifica:** `/plugin` → il plugin `aios` deve risultare installato e abilitato.
 Le skill compaiono come `aios`, `aios-context`, … (o namespaced `aios:*`).

@@ -3,8 +3,8 @@
   "name": "aios",
   "description": "AI Operating System — costruisce un AIOS aziendale/cliente in Claude Code, livello per livello.",
   "owner": {
-    "name": "Marco Macelloni",
-    "url": "https://github.com/marcomacelloni"
+    "name": "CinaWeb",
+    "url": "https://github.com/CinaWeb"
   },
   "plugins": [
     {

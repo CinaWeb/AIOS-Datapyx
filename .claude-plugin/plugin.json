@@ -4,6 +4,6 @@
   "description": "AI Operating System per aziende/clienti. Orchestratore (aios) + 5 livelli: Contesto (con brand), Dati, Intelligence, Automazioni, Dashboard. Include client-project-kickoff e brandkit per l'identità di brand.",
   "author": {
     "name": "Marco Macelloni",
-    "url": "https://github.com/marcomacelloni"
+    "url": "https://github.com/CinaWeb/AIOS-Datapyx"
   }
 }

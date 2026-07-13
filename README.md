@@ -17,6 +17,7 @@ Automazioni → Controllo**.
   - [Avvio: costruire l'AIOS di un cliente](#avvio-costruire-laios-di-un-cliente)
   - [I 5 livelli, uno per uno](#i-5-livelli-uno-per-uno)
   - [Flusso operativo quotidiano](#flusso-operativo-quotidiano)
+  - [Le due discipline: DOE e /challenge](#le-due-discipline-doe-e-challenge)
 - [Cosa viene creato nella cartella del cliente](#cosa-viene-creato-nella-cartella-del-cliente)
 - [Aggiornare il plugin](#aggiornare-il-plugin)
 - [Origine delle skill](#origine-delle-skill)
@@ -171,6 +172,40 @@ Una volta costruito l'AIOS, il lavoro di tutti i giorni nella cartella del clien
 | Automazioni | `/<nome-automazione>` | Es. `/crea-fattura` |
 | Pannello | `/dashboard` | Apre la dashboard localhost |
 | Fine sessione | `/commit` | Salva e versiona l'AIOS (se InfraOS attivo) |
+
+### Le due discipline: DOE e /challenge
+
+Un AIOS ha due metà con rischi opposti, e una disciplina per ciascuna:
+
+```
+              AIOS (5 livelli)
+        ┌───────────┴───────────┐
+   metà DETERMINISTICA     metà PROBABILISTICA
+   (Automazioni)           (Contesto · Intelligence · DataPyx)
+        │                       │
+      [ DOE ]              [ /challenge ]
+   affidabilità            rigore del
+   dell'esecuzione         giudizio
+```
+
+- **DOE — affidabilità di ciò che *esegui*.** Ogni automazione segue la
+  Three-Layer Architecture: **direttiva** (il comando/SOP) → **orchestrazione**
+  (Claude decide e chiama) → **esecuzione** (script Python deterministico). La
+  logica ripetibile — numerazioni, calcoli, PDF, API, DB — sta nello script, mai
+  improvvisata dall'LLM (taglia l'accumulo d'errore sui passi concatenati). Se uno
+  script fallisce, si corregge **script + direttiva** e si ri-testa: ogni errore
+  rende il sistema più robusto. Vive in `aios-automation`.
+
+- **`/challenge` — rigore di ciò che *giudichi*.** Un gate epistemologico (agente
+  *Cognitos*) che fa **red-team** di una diagnosi o decisione prima di agirci:
+  costruisce il contro-argomento più forte, isola le assunzioni fragili, descrive
+  lo scenario di fallimento, chiude con un **verdetto** (🟢 regge / 🟡 da rinforzare
+  / 🔴 da rivedere / ⚪ ambiguo) e una confidenza. È **on-demand** — per decisioni
+  ad alta posta o diagnosi a confidenza Media/Ipotesi, non su ogni frase. `datapyx`
+  lo propone dopo la diagnosi (FASE 4) e nel pre-mortem.
+
+Le due sono speculari: DOE evita l'errore di *esecuzione*, `/challenge` l'errore di
+*giudizio confidente*.
 
 ---
 

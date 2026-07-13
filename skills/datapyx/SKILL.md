@@ -120,6 +120,14 @@ Con max 3 domande, una alla volta:
  
 — Interno vs esterno: cosa dipende dal cliente, cosa dipende dal mercato?
  
+DISAGGREGAZIONE OBBLIGATORIA — se la sfida ruota attorno a un dato che si è mosso (un calo o un aumento: "-12% di fatturato", "churn raddoppiato", "lead dimezzati"), NON diagnosticare l'aggregato. Prima di formulare il problema reale in FASE 3, ottieni la scomposizione minima:
+ 
+· Per unità / segmento — il movimento è omogeneo o concentrato? (per negozio, canale, area, linea di prodotto, coorte). Un aggregato spesso nasconde 1-2 casi che spiegano l'80%.
+ 
+· Nei suoi fattori — scomponi la metrica (es. fatturato = n° transazioni × valore medio; churn = nuovi persi / base). Cause opposte producono lo stesso numero aggregato: un calo di volumi e un ritocco prezzi vanno diagnosticati in modo diverso.
+ 
+Se il consulente non ha questi numeri, chiedili; se non sono disponibili, segnala esplicitamente che il "problema reale" resta un'IPOTESI (mai confidenza Alta) finché non arrivano. Un problema formulato su un aggregato non scomposto è fragile per costruzione.
+ 
 FASE 3 · REFRAME
  
 Prima di proporre il problema reale, applica almeno 2 di questi lens alternativi:

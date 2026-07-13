@@ -1,0 +1,17 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "aios",
+  "description": "AI Operating System — costruisce un AIOS aziendale/cliente in Claude Code, livello per livello.",
+  "owner": {
+    "name": "Marco Macelloni",
+    "url": "https://github.com/marcomacelloni"
+  },
+  "plugins": [
+    {
+      "name": "aios",
+      "description": "Costruisce un AI Operating System personalizzato per un'azienda: contesto+brand, dati, intelligence, automazioni, dashboard. Entry point orchestratore con checklist.",
+      "source": "./",
+      "category": "productivity"
+    }
+  ]
+}

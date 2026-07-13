@@ -72,6 +72,19 @@ di plugin).
 **Verifica:** `/plugin` → il plugin `aios` deve risultare installato e abilitato.
 Le skill compaiono come `aios`, `aios-context`, … (o namespaced `aios:*`).
 
+### Installazione su Cowork (uso personale)
+
+1. Apri il menu **Customize** nella sidebar di Claude.
+2. Vai al tab **Plugins**.
+3. In **Personal plugins**, clicca **"+" → Add marketplace**.
+4. Scegli **Add from a repository** e incolla `CinaWeb/AIOS-Datapyx` (o l'URL
+   completo `https://github.com/CinaWeb/AIOS-Datapyx`).
+5. Una volta sincronizzato, cerca il plugin **aios** nel catalogo e clicca
+   **Install**.
+
+Le skill (`aios`, `aios-context`, `datapyx`, ecc.) compariranno digitando `/`
+o cliccando **"+"** in chat/Cowork.
+
 **Prerequisiti** (installati/verificati dalle skill quando servono):
 - Python 3 — per i livelli Dati, Intelligence, Automazioni, Dashboard
 - Git + (opzionale) GitHub CLI `gh` — per InfraOS (versionamento dell'AIOS)

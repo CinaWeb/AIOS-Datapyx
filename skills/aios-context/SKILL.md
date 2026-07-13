@@ -79,11 +79,11 @@ inizio sessione. Se al passo 7 crei la cartella `brand/`, importa anche quei fil
 nel CLAUDE.md. Se un CLAUDE.md esiste già, integralo senza distruggere il
 contenuto esistente.
 
-**prime.md** deve leggere tutti i file in `.claude/context/` (e, se presente,
-`.claude/context/key-metrics.md` di un eventuale futuro DataOS) e produrre un
-riepilogo sintetico di chi è l'utente, cosa fa l'azienda, priorità e numeri
+**prime.md** deve leggere tutti i file in `.claude/context/` (incluso
+`.claude/context/key-metrics.md` del livello Dati/DataOS, se presente) e produrre
+un riepilogo sintetico di chi è l'utente, cosa fa l'azienda, priorità e numeri
 chiave. Scrivi le istruzioni del comando così che restino valide anche quando i
-file di contesto crescono.
+file di contesto crescono (nuovi file di contesto, `history.md` di InfraOS…).
 
 Tutti i contenuti generati per aziende italiane vanno **in italiano**.
 

@@ -1,6 +1,6 @@
 ---
 name: aios
-description: Punto di ingresso unico per costruire l'AIOS (AI Operating System) di un'azienda/cliente. Orchestra in sequenza tutti e 5 i livelli (Contesto, Dati, Intelligence, Automazioni, Dashboard) invocando le skill aios-context, aios-data, aios-intel, aios-automation, aios-dashboard, e traccia il progresso in una checklist persistente così nessuno step viene dimenticato e il processo è riprendibile tra sessioni. Usa quando l'utente vuole creare, continuare o completare l'AIOS di un cliente ("costruiamo l'AIOS", "riprendi l'AIOS", "a che punto è l'AIOS").
+description: Punto di ingresso unico per costruire l'AIOS (AI Operating System) di un'azienda/cliente. Orchestra in sequenza tutti e 5 i livelli (Contesto+brand, Dati, Intelligence, Automazioni, Dashboard) invocando le skill aios-context, aios-data, aios-intel, aios-automation, aios-dashboard, offre il diagnostico DataPyx (skill datapyx) dopo il Contesto, e traccia il progresso in una checklist persistente così nessuno step viene dimenticato e il processo è riprendibile tra sessioni. Usa quando l'utente vuole creare, continuare o completare l'AIOS di un cliente ("costruiamo l'AIOS", "riprendi l'AIOS", "a che punto è l'AIOS").
 argument-hint: "Nome cliente (opzionale)"
 ---
 
@@ -41,7 +41,8 @@ spunte.
 - Livello 1 fatto se esiste `.claude/context/` con file + `CLAUDE.md`
 - Livello 2 fatto se esiste `data/database.db` + `.claude/context/key-metrics.md`
 - Livello 3 fatto se nel DB c'è la tabella `meetings`
-- Livello 4 fatto se esiste `automations/roadmap.md` (con almeno un'automazione ✅)
+- Livello 4 avviato se esiste `automations/roadmap.md` (audit fatto); completato
+  se almeno un'automazione è `✅`
 - Livello 5 fatto se esiste `dashboard/server.py`
 Aggiorna `.claude/aios-build.md` di conseguenza.
 

@@ -42,15 +42,17 @@ scrivi `/aios`. Da lì ti guido livello per livello.
 |---|---|
 | `/aios` | Avvia/riprende la costruzione dell'AIOS |
 | `/prime` | A inizio sessione: ricarica contesto + numeri |
+| `/client-brief <cliente>` | Brief pre-call: timeline, promesse vs consegne, pendenze, agenda |
 | `/refresh-data` | Riaggiorna i numeri nel database |
 | `/collect-meetings` · `/catchup` | Scarica riunioni · riassunto delle recenti |
 | `/datapyx` | Diagnosi guidata di una sfida del cliente |
 | `/challenge` | "Avvocato del diavolo": stressa una diagnosi/decisione prima di agire |
 | `/dashboard` | Apre il pannello visivo |
-| `/commit` | A fine sessione: salva e versiona (se InfraOS attivo) |
+| `/debrief` | A fine sessione: consolida i progressi del giorno nel contesto |
+| `/commit` | Salva e versiona (se InfraOS attivo) |
 | `/aios-help` | Questo aiuto |
 
-**Il ritmo quotidiano** — `/prime` → lavori → `/commit`.
+**Il ritmo quotidiano** — `/prime` → lavori → `/debrief` → `/commit`.
 
 **Le due discipline** — le automazioni (DOE) rendono affidabile ciò che *fai*;
 `/challenge` rende rigoroso ciò che *decidi*.

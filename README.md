@@ -26,7 +26,7 @@ Automazioni → Controllo**.
 
 ## Cosa contiene
 
-**8 skill + 2 comandi (`/challenge`, `/aios-help`).** Entry point:
+**8 skill + 4 comandi (`/challenge`, `/aios-help`, `/debrief`, `/client-brief`).** Entry point:
 - **`aios`** — orchestratore: rileva lo stato, mantiene una checklist persistente
   (`.claude/aios-build.md`), esegue i 5 livelli in ordine invocando le skill sotto.
 
@@ -170,6 +170,7 @@ Una volta costruito l'AIOS, il lavoro di tutti i giorni nella cartella del clien
 | Quando | Comando | Cosa fa |
 |---|---|---|
 | Inizio sessione | `/prime` | Carica contesto + metriche chiave |
+| Prima di una call | `/client-brief <cliente>` | Brief pre-call: timeline, promesse vs consegne, pendenze, agenda |
 | Aggiornare i dati | `/refresh-data` | Riscarica le metriche nel database |
 | Aggiornare le riunioni | `/collect-meetings` | Scarica i nuovi meeting |
 | Riprendere il filo | `/catchup` | Sintesi meeting recenti (decisioni, action item) |
@@ -177,7 +178,8 @@ Una volta costruito l'AIOS, il lavoro di tutti i giorni nella cartella del clien
 | Sfidare una diagnosi/decisione | `/challenge` | Gate epistemologico: red-team + verdetto, prima di agire su una scelta ad alta posta |
 | Automazioni | `/<nome-automazione>` | Es. `/crea-fattura` |
 | Pannello | `/dashboard` | Apre la dashboard localhost |
-| Fine sessione | `/commit` | Salva e versiona l'AIOS (se InfraOS attivo) |
+| Fine sessione | `/debrief` | Consolida i progressi del giorno nel contesto + `history.md` |
+| Salvare/versionare | `/commit` | Salva e versiona l'AIOS (se InfraOS attivo) |
 
 ### Le due discipline: DOE e /challenge
 

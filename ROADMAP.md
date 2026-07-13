@@ -24,10 +24,16 @@ probabilistica dell'AIOS; complemento speculare della disciplina DOE sulle
 automazioni (metà deterministica). Gli altri specialisti (mercato, competitor,
 JTBD, feedback loop, dati Q+) restano da fare.
 
+✅ **Fatto (v0.3.0):** chiuso il ciclo quotidiano con **`/debrief`** (consolida i
+progressi del giorno in `context` + `history.md`) e aggiunto **`/client-brief`**
+(intelligence pre-call). Restano da fare gli agenti specialisti sopra.
+
 ## Backlog / candidati
 - **Persistenza della diagnosi**: salvare l'output DataPyx (problema reale, leve,
   scenari, segnalpost) in un file del cliente, così `/prime` lo ricarica e la
   dashboard lo mostra; abilita la Fase 5 (monitoraggio) a ripartire dallo stato.
+  *(Parzialmente coperto da `/debrief`, che consolida decisioni e stato a fine
+  giornata; manca la persistenza strutturata dello specifico output DataPyx.)*
 - **Collaudo end-to-end**: le skill sono scritte ma non ancora eseguite su un
   caso reale dall'inizio alla fine.
 - **Visibilità repo**: verificare pubblica/privata a seconda di chi deve

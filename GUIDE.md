@@ -433,6 +433,7 @@ Una volta costruito l'AIOS, il lavoro di ogni giorno è semplice:
 | Quando | Scrivi | Cosa succede |
 |--------|--------|--------------|
 | **Apri la sessione** | `/prime` | Claude ricarica contesto + numeri chiave: sa tutto di nuovo |
+| Prima di una call cliente | `/client-brief <nome>` | Brief in 5 min: storia, promesse vs consegne, pendenze, 3 punti d'agenda |
 | Ti servono i numeri freschi | `/refresh-data` | Riaggiorna il database |
 | Nuove riunioni da importare | `/collect-meetings` | Le scarica |
 | "Cosa mi sono perso?" | `/catchup` | Riassunto riunioni recenti |
@@ -440,9 +441,12 @@ Una volta costruito l'AIOS, il lavoro di ogni giorno è semplice:
 | Stressare una decisione | `/challenge` | Red-team + verdetto |
 | Fare un'operazione | `/<automazione>` | Es. `/crea-fattura` |
 | Il pannello visivo | `/dashboard` | Apre la dashboard |
-| **Chiudi la sessione** | `/commit` | Salva e versiona il lavoro (se hai InfraOS) |
+| **Chiudi la giornata** | `/debrief` | Claude ti fa qualche domanda e aggiorna il contesto coi progressi del giorno |
+| Salva/versiona | `/commit` | Mette al sicuro il lavoro (se hai InfraOS) |
 
-Il ritmo è sempre lo stesso: **`/prime` → lavori → `/commit`**.
+Il ritmo è sempre lo stesso: **`/prime` → lavori → `/debrief` → `/commit`**.
+`/prime` la mattina ti fa ripartire dallo stato di ieri; `/debrief` la sera
+registra cosa è successo oggi, così quello stato resta sempre aggiornato.
 
 ---
 

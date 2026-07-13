@@ -164,7 +164,7 @@ Scenari — 2-3 scenari alternativi con:
  
   · Segnalpost da monitorare (indicatori precoci per capire quale scenario si sta materializzando)
  
-Check pre-mortem — se questa diagnosi fosse sbagliata, qual sarebbe la causa più probabile?
+Check pre-mortem — se questa diagnosi fosse sbagliata, qual sarebbe la causa più probabile? Per un pre-mortem *rigoroso* su una diagnosi ad alto rischio, proponi il gate epistemologico `/challenge` (vedi sotto).
  
 Prossimo passo suggerito — agente da attivare o azione da intraprendere
  
@@ -179,6 +179,19 @@ SINTESI — PUNTI CHIAVE
 · [il segnalpost più critico da tenere d'occhio]
  
 (max 5 punti, scritti per essere condivisi con il cliente)
+ 
+---
+ 
+GATE EPISTEMOLOGICO · /challenge (opzionale, ad alto rischio)
+ 
+La diagnosi DataPyx è un **giudizio probabilistico**: il rischio non è l'esecuzione, è agire su una lettura plausibile ma sbagliata. Prima che il consulente porti la diagnosi al cliente o ci costruisca sopra un intervento, offri il gate:
+ 
+"Vuoi che sottoponga questa diagnosi a `/challenge`? Costruisce il contro-argomento più forte, isola le assunzioni fragili e dà un verdetto (regge / da rinforzare / da rivedere)."
+ 
+· Proponilo — non forzarlo — quando la diagnosi è ad **alta posta** (decisione costosa, difficile da invertire) o quando la confidenza del "Problema reale" è **Media/Ipotesi**.
+· È un gate **on-demand**: non lanciarlo su ogni diagnosi, solo dove il costo dell'errore lo giustifica.
+· Se `/challenge` restituisce 🔴/🟡, riapri la FASE 3 (Reframe) sui punti che non hanno retto, non procedere.
+· `/challenge` è il complemento speculare della disciplina DOE del layer Automazioni: DOE rende affidabile ciò che *esegui*, il gate rende rigoroso ciò che *giudichi*.
  
 ---
  

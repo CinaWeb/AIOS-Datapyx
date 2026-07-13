@@ -18,6 +18,12 @@ Da fare: creare gli agenti specialisti come skill/subagent collegati, es.
 Ognuno riceve dal PM (DataPyx) un incarico mirato e restituisce un report
 strutturato con qualità del dato dichiarata (fonte/freschezza/Q+/Q−/affidabilità).
 
+✅ **Fatto (v0.2.0):** il primo specialista è il gate epistemologico `/challenge`
+(agente *Cognitos*) — red-team di una diagnosi prima di agirci. Presidia la metà
+probabilistica dell'AIOS; complemento speculare della disciplina DOE sulle
+automazioni (metà deterministica). Gli altri specialisti (mercato, competitor,
+JTBD, feedback loop, dati Q+) restano da fare.
+
 ## Backlog / candidati
 - **Persistenza della diagnosi**: salvare l'output DataPyx (problema reale, leve,
   scenari, segnalpost) in un file del cliente, così `/prime` lo ricarica e la

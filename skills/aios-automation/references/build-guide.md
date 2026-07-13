@@ -14,15 +14,23 @@ Come costruire UNA automazione dopo che l'utente ha confermato. Ogni automazione
    l'output.
 5. **Roadmap** — marca l'automazione `✅ fatta` in `automations/roadmap.md`.
 
-## Anatomia di un'automazione
+## Anatomia di un'automazione (mapping DOE)
 ```
-.claude/commands/<nome>.md     # cosa fa il comando, quali argomenti accetta, che script chiama
-automations/<nome>/*.py        # logica (solo se serve: PDF, chiamate API, calcoli)
+.claude/commands/<nome>.md     # DIRETTIVA — cosa fa, quali argomenti accetta, che script chiama
+   └─ Claude che esegue        # ORCHESTRAZIONE — raccoglie input, chiama lo script, gestisce gli errori
+automations/<nome>/*.py        # ESECUZIONE — logica deterministica (PDF, API, calcoli, DB)
 data/database.db               # tabelle nuove se l'automazione conserva/legge dati strutturati
 .env                           # eventuali segreti (git-ignorato, non toccare chiavi esistenti)
 ```
+I tre livelli della Three-Layer Architecture (DOE): la **direttiva** è la SOP
+markdown del comando, l'**orchestrazione** è Claude che decide e chiama, l'
+**esecuzione** è lo script deterministico. L'LLM decide *cosa* fare con *quali
+input*; la logica ripetibile la fa lo **script**, mai la chat.
+
 Automazioni banali (solo prompt/lettura DB) non hanno bisogno di script Python:
-il comando può bastare. Non creare script per il gusto di farlo.
+il comando può bastare. Non creare script per il gusto di farlo — ma qualunque
+cosa sia **deterministica e ripetibile** (numerazioni, calcoli, formattazione,
+chiamate API) va nello script, non improvvisata a mano.
 
 ## Esempio canonico: generazione fatture
 Dal video, come riferimento di pattern completo.
@@ -52,3 +60,7 @@ crea il cliente, numera progressivo, produce il PDF, lo mostra.
 - Fallire in modo pulito: input mancanti → chiedi, non crashare.
 - Segreti solo in `.env`. Numerazioni/contatori sempre derivati dal DB, mai
   hardcoded.
+- **Determinismo nello script (DOE):** la logica ripetibile sta nel Python, non
+  nell'LLM. Riduce l'accumulo di errore sui passi concatenati.
+- **Auto-correzione (DOE):** script fallisce → correggi lo script *e* la direttiva,
+  ri-testa, `/commit`. Ogni errore rende il sistema più robusto; non aggirarlo a mano.

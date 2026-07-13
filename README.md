@@ -25,7 +25,7 @@ Automazioni → Controllo**.
 
 ## Cosa contiene
 
-**8 skill.** Entry point:
+**8 skill + 1 comando (`/challenge`).** Entry point:
 - **`aios`** — orchestratore: rileva lo stato, mantiene una checklist persistente
   (`.claude/aios-build.md`), esegue i 5 livelli in ordine invocando le skill sotto.
 
@@ -40,6 +40,14 @@ Diagnostica trasversale:
 - **`datapyx`** — DataPyx Market Intelligence Assistant: diagnostico sistemico
   per consulenti (problema reale, punti di leva, scenari, monitoraggio). Non è un
   livello di build: è il cuore analitico, offerto dopo il Contesto e ripetibile.
+  Include il gate epistemologico **`/challenge`** (vedi sotto).
+
+Gate epistemologico:
+- **`/challenge`** — agente *Cognitos*: sottopone una diagnosi/decisione/tesi a
+  red-team (contro-argomento più forte, assunzioni fragili, scenario di fallimento,
+  verdetto + confidenza). È il presidio di rigore della **metà probabilistica**
+  dell'AIOS, speculare alla disciplina **DOE** che rende affidabile la metà
+  **deterministica** (le automazioni). Gate on-demand per decisioni ad alta posta.
 
 Dipendenze di brand (incluse per self-containment):
 - **`client-project-kickoff`** — scaffolding + brand identity (estrae da sito o
@@ -139,7 +147,9 @@ parlato). Interroghi le riunioni a voce libera: *"cosa è stato deciso lunedì?"
 Audit dei task ripetitivi area per area → `automations/roadmap.md` prioritizzata.
 Per ogni automazione ti chiede se costruirla ora (comando + script + tabelle) o
 rimandarla come task futuro. Esempio: generazione fatture con numerazione
-progressiva.
+progressiva. Ogni automazione segue la disciplina **DOE** (direttiva = comando,
+orchestrazione = Claude, esecuzione = script deterministico) con auto-correzione:
+la logica ripetibile sta nello script, non improvvisata dall'LLM.
 
 **5 · Dashboard — `aios-dashboard`**
 Pannello localhost riepilogativo del cliente: metriche, funnel, stato automazioni,
@@ -157,6 +167,7 @@ Una volta costruito l'AIOS, il lavoro di tutti i giorni nella cartella del clien
 | Aggiornare le riunioni | `/collect-meetings` | Scarica i nuovi meeting |
 | Riprendere il filo | `/catchup` | Sintesi meeting recenti (decisioni, action item) |
 | Diagnosi/monitoraggio sfida | `datapyx` | Diagnostico sistemico: problema reale, leve, scenari, monitoraggio |
+| Sfidare una diagnosi/decisione | `/challenge` | Gate epistemologico: red-team + verdetto, prima di agire su una scelta ad alta posta |
 | Automazioni | `/<nome-automazione>` | Es. `/crea-fattura` |
 | Pannello | `/dashboard` | Apre la dashboard localhost |
 | Fine sessione | `/commit` | Salva e versiona l'AIOS (se InfraOS attivo) |

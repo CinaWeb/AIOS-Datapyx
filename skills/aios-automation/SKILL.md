@@ -21,6 +21,34 @@ prima di costruire un'automazione.
 - **On-request**: se l'utente (o l'argomento della skill) indica già cosa
   automatizzare, salta l'audit e vai diretto alla costruzione di quella.
 
+## Disciplina DOE — affidabilità del layer deterministico
+
+Le automazioni sono la **metà deterministica** dell'AIOS: qui l'errore si accumula
+(`90% per passo = 59% su 5 passi`). Per questo ogni automazione segue la
+**Three-Layer Architecture (DOE)** — l'AIOS la implementa già, questa è la regola
+che la rende esplicita:
+
+| Livello DOE | Nell'automazione |
+|---|---|
+| **Direttiva** (cosa fare) | `.claude/commands/<nome>.md` — la SOP del comando |
+| **Orchestrazione** (decidere) | Claude che legge la direttiva, raccoglie input, chiama lo script |
+| **Esecuzione** (fare) | `automations/<nome>/*.py` — script **deterministico** |
+
+Due regole non negoziabili che DOE aggiunge:
+
+1. **La business logic deterministica va nello script, mai improvvisata dall'LLM.**
+   Numerazioni, calcoli, formattazione PDF, chiamate API, letture/scritture DB →
+   sempre codice Python chiamato dal comando. L'LLM decide *cosa* e *con quali
+   input*, non *esegue a mano* il lavoro ripetibile. (Automazioni banali di solo
+   prompt/lettura DB non hanno script: vedi build-guide.)
+2. **Auto-correzione:** se uno script fallisce, correggi lo **script** e aggiorna la
+   **direttiva** (il comando) con quello che hai imparato — non aggirare l'errore a
+   mano nella chat. Ogni fallimento rende il sistema più robusto. Chiudi con
+   `/commit` (InfraOS) così la correzione è versionata.
+
+Il gate epistemologico `/challenge` è il complemento speculare: DOE presidia ciò
+che *esegui*, `/challenge` ciò che *giudichi*.
+
 ## Flusso
 
 ### 1. Contesto
@@ -65,7 +93,9 @@ data/database.db               # nuove tabelle se l'automazione le richiede
 
 ### 6. Verifica e chiusura
 Per ogni automazione costruita fai un **test reale** e mostra l'output (es.
-genera una fattura di prova e mostra il PDF/i dati). Aggiorna la roadmap. Se
-l'utente usa InfraOS, suggerisci `/commit`.
+genera una fattura di prova e mostra il PDF/i dati). Se il test fallisce, applica
+l'**auto-correzione DOE**: correggi lo script e aggiorna la direttiva (il comando),
+poi ri-testa — non aggirare il problema a mano. Aggiorna la roadmap. Se l'utente
+usa InfraOS, suggerisci `/commit` per versionare automazione e correzioni.
 
 Contenuti generati per aziende italiane: **in italiano**.

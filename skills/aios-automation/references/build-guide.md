@@ -59,8 +59,8 @@ crea il cliente, numera progressivo, produce il PDF, lo mostra.
 Qui l'errore non è tecnico ma "fuori brand": testo generico, tono sbagliato,
 target mancato. La direttiva (`.claude/commands/<nome>.md`) deve istruire a
 leggere, **prima di ogni generazione**:
-- `.claude/context/brand/` — colori, font, tono di voce (se presente in
-  `brand-identity.md`);
+- `brand/` (cartella top-level, non dentro `.claude/context/`) — colori, font,
+  tono di voce (se presente in `brand-identity.md`);
 - `.claude/context/azienda.md` — settore, prodotti, clienti target;
 - `.claude/context/decisioni.md`, se esiste — punti di leva/priorità dalla
   diagnosi, utili a scegliere temi rilevanti;

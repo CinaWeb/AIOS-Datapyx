@@ -18,6 +18,7 @@ Automazioni → Controllo**.
   - [I 5 livelli, uno per uno](#i-5-livelli-uno-per-uno)
   - [Flusso operativo quotidiano](#flusso-operativo-quotidiano)
   - [Le due discipline: DOE e /challenge](#le-due-discipline-doe-e-challenge)
+- [Memoria persistente](#memoria-persistente)
 - [Cosa viene creato nella cartella del cliente](#cosa-viene-creato-nella-cartella-del-cliente)
 - [Aggiornare il plugin](#aggiornare-il-plugin)
 - [Origine delle skill](#origine-delle-skill)
@@ -28,7 +29,8 @@ Automazioni → Controllo**.
 
 **8 skill + 4 comandi (`/challenge`, `/aios-help`, `/debrief`, `/client-brief`).** Entry point:
 - **`aios`** — orchestratore: rileva lo stato, mantiene una checklist persistente
-  (`.claude/aios-build.md`), esegue i 5 livelli in ordine invocando le skill sotto.
+  (`.claude/aios-build.md`) e un registro lavori trasversale (`.claude/log.md`),
+  esegue i 5 livelli in ordine invocando le skill sotto.
 
 I 5 livelli:
 1. **`aios-context`** — Contesto + Brand
@@ -41,6 +43,8 @@ Diagnostica trasversale:
 - **`datapyx`** — DataPyx Market Intelligence Assistant: diagnostico sistemico
   per consulenti (problema reale, punti di leva, scenari, monitoraggio). Non è un
   livello di build: è il cuore analitico, offerto dopo il Contesto e ripetibile.
+  Salva la sintesi in `.claude/context/decisioni.md`, che `/prime` ricarica nelle
+  sessioni successive e che `aios-automation` legge per prioritizzare l'audit.
   Include il gate epistemologico **`/challenge`** (vedi sotto).
 
 Gate epistemologico:
@@ -217,6 +221,27 @@ Le due sono speculari: DOE evita l'errore di *esecuzione*, `/challenge` l'errore
 
 ---
 
+## Memoria persistente
+
+Due meccanismi trasversali, indipendenti da InfraOS/Git, tengono l'AIOS coerente
+tra una sessione e l'altra:
+
+- **`.claude/log.md`** — registro cronologico append-only: ogni skill vi aggiunge
+  una riga (`YYYY-MM-DD · skill · lavoro completato`) quando finisce un'unità di
+  lavoro. Non è lo stato (quello è `.claude/aios-build.md`), è la cronologia di
+  cosa è successo. `/prime` ne controlla la voce più vecchia a ogni sessione: oltre
+  i **3 mesi**, propone di archiviarla in `.claude/log-archivio.md` o eliminarla —
+  mai in automatico.
+- **Frontmatter datato** — ogni file di stato/conoscenza (`.claude/context/*.md`,
+  `brand/*.md`, `automations/roadmap.md`, `.claude/aios-build.md`) porta in testa
+  `created:`/`updated:` in YAML, aggiornati dalla skill che lo scrive.
+
+Questi due pezzi mappano la "memoria episodica" (log) e la "memoria semantica"
+(contesto datato) di un'architettura di memoria per agenti AI a più livelli — il
+resto (working memory, skill) lo gestisce Claude Code nativamente.
+
+---
+
 ## Cosa viene creato nella cartella del cliente
 
 ```
@@ -224,15 +249,18 @@ Le due sono speculari: DOE evita l'errore di *esecuzione*, `/challenge` l'errore
 ├── CLAUDE.md                       # identità azienda, import brand, istruzioni
 ├── history.md                      # diario sessioni (se InfraOS)
 ├── .claude/
-│   ├── context/                    # azienda, personale, strategia, key-metrics…
+│   ├── aios-build.md               # stato costruzione (checklist, con created:/updated:)
+│   ├── log.md                      # registro lavori trasversale (per-skill, con data)
+│   ├── context/                    # azienda, personale, strategia, key-metrics,
+│   │                                #   decisioni.md (DataPyx) — tutti con created:/updated:
 │   └── commands/                   # /prime, /refresh-data, /catchup, /dashboard, …
-├── brand/                          # brand-identity, colors, typography, logo, assets/
+├── brand/                          # brand-identity, colors, typography, logo, assets/ — idem
 ├── data/
 │   ├── database.db                 # SQLite: pipeline, meetings, clienti…
 │   ├── connectors/                 # script per sorgente
 │   └── refresh.py
 ├── automations/
-│   ├── roadmap.md                  # opportunità + stato
+│   ├── roadmap.md                  # opportunità + stato (con created:/updated:)
 │   └── <nome>/                     # script delle automazioni
 ├── dashboard/                      # server.py + index.html
 └── .env                            # chiavi API/segreti (git-ignorato)

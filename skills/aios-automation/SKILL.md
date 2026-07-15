@@ -52,9 +52,11 @@ che *esegui*, `/challenge` ciò che *giudichi*.
 ## Flusso
 
 ### 1. Contesto
-Leggi **tutto** `.claude/context/`, inclusa la sottocartella `brand/` (colori,
-font, tono di voce) e `decisioni.md` se presente (punti di leva dalla diagnosi
-DataPyx — orientano quali aree scavare per prime nell'audit). Ti dice di cosa si
+Leggi **tutto** `.claude/context/` e, se esiste, la cartella `brand/` in root
+(colori, font, tono di voce) — è top-level, sorella di `.claude/`, non dentro
+`context/`. Leggi anche `.claude/context/decisioni.md` se presente (punti di
+leva dalla diagnosi DataPyx — orientano quali aree scavare per prime
+nell'audit). Ti dice di cosa si
 occupa l'azienda, su quali aree ha senso automatizzare e, se già diagnosticata,
 dove intervenire con priorità. Se manca, avvisa che l'audit sarà meno mirato e
 chiedi se procedere o costruire prima il contesto (`aios-context`).

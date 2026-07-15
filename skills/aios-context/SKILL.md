@@ -75,7 +75,8 @@ Aggiungi es. `team.md`, `competitor.md`, `prodotti.md` **solo se** il materiale
 lo giustifica. Non creare file vuoti o riempitivi.
 
 **Convenzione data — frontmatter su ogni file di stato/conoscenza.** Ogni file
-in `.claude/context/*.md` e `.claude/context/brand/*.md` inizia con:
+in `.claude/context/*.md` e nella cartella `brand/*.md` (top-level, sorella di
+`.claude/`, creata al passo 7) inizia con:
 ```yaml
 ---
 created: YYYY-MM-DD

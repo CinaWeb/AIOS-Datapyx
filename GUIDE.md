@@ -229,6 +229,11 @@ di' di sì, ci pensa lui. Ti servirà solo `/commit` a fine giornata.
 > ✅ **Traguardo:** da adesso, aprendo Claude in questa cartella e scrivendo
 > `/prime`, lui *sa* cos'è Studio Rossi.
 
+> 💡 **Dietro le quinte:** ogni file di contesto porta in testa una data di
+> creazione e ultimo aggiornamento (non devi farci nulla, ci pensa Claude), e
+> Claude tiene un piccolo registro (`.claude/log.md`) di cosa è stato costruito
+> e quando — vedi [§5](#5-la-giornata-tipo) per i dettagli.
+
 ### 3.3 Livello 2 — Dati
 
 Serve a portare i **numeri veri** dentro l'AIOS, in un piccolo database, così puoi
@@ -390,6 +395,13 @@ soluzione, non il problema. Prima capiamo perché cala il negozio.
 …
 ```
 
+Alla fine della diagnosi, DataPyx **non butta via il lavoro**: salva il
+riepilogo (problema reale, punti di leva, prossimo passo) in
+`.claude/context/decisioni.md`. La sessione successiva `/prime` lo ricarica
+automaticamente — non ripartite mai da zero — e quando arrivi al Livello 4
+(Automazioni), Claude usa quei punti di leva per capire *quali* automazioni
+contano davvero, invece di proporne una lista generica.
+
 ### Il gate `/challenge` — l'avvocato del diavolo
 
 Quando DataPyx arriva a una **diagnosi importante** (una decisione costosa, difficile
@@ -448,6 +460,27 @@ Il ritmo è sempre lo stesso: **`/prime` → lavori → `/debrief` → `/commit`
 `/prime` la mattina ti fa ripartire dallo stato di ieri; `/debrief` la sera
 registra cosa è successo oggi, così quello stato resta sempre aggiornato.
 
+### Il registro dei lavori (`.claude/log.md`)
+
+Ogni volta che una skill finisce un lavoro (costruisce un livello, chiude una
+diagnosi, crea un'automazione…), aggiunge una riga a un piccolo registro:
+
+```
+- 2026-07-15 · aios-context · Livello 1 Contesto costruito (+ brand)
+- 2026-07-15 · datapyx · Diagnosi conclusa — problema reale: calo concentrato
+  nel negozio via Roma, non generalizzato
+- 2026-07-20 · aios-automation · Automazione /crea-fattura costruita
+```
+
+Non è la conoscenza dell'azienda (quella vive nei file di contesto e non si
+tocca), è solo la cronologia di *cosa è stato fatto e quando* — utile se torni
+dopo mesi e vuoi ricordare a che punto eri senza rileggere tutto.
+
+**Non cresce all'infinito.** A ogni `/prime`, Claude controlla la voce più
+vecchia: se supera i **3 mesi**, te lo segnala e chiede se vuoi archiviarla
+(spostata in `.claude/log-archivio.md`, senza perderla) o eliminarla. Non lo
+fa mai da solo senza chiedere.
+
 ---
 
 ## 6. Aggiornare, riprendere, più macchine
@@ -495,6 +528,11 @@ Non vengono condivisi con `/commit`.
 **"Posso costruire solo un livello?"**
 Sì. Anche solo il Contesto (Livello 1) è utile. Aggiungi gli altri quando vuoi.
 
+**"Il registro `.claude/log.md` si riempie all'infinito?"**
+No: a ogni `/prime` Claude controlla se ci sono voci più vecchie di 3 mesi e,
+solo in quel caso, ti chiede se archiviarle o eliminarle. Non lo fa mai senza
+chiedertelo prima.
+
 ---
 
 ## 8. Mappa dei file creati
@@ -508,7 +546,9 @@ Studio Rossi/                        ← la cartella = l'AIOS del cliente
 ├── history.md                       # diario delle sessioni (se usi InfraOS)
 ├── .claude/
 │   ├── aios-build.md                # promemoria: a che punto è la costruzione
-│   ├── context/                     # azienda, strategia, team, key-metrics…
+│   ├── log.md                       # registro lavori: cosa è stato fatto e quando
+│   ├── context/                     # azienda, strategia, team, key-metrics,
+│   │                                 #   decisioni.md (diagnosi DataPyx)…
 │   └── commands/                    # /prime, /refresh-data, /catchup, /crea-fattura, /dashboard…
 ├── brand/                           # colori, tipografia, logo, asset
 ├── data/

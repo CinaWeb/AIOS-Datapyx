@@ -272,12 +272,26 @@ ancora fatti semplicemente non esistono.
 
 ## Aggiornare il plugin
 
-Modifica le skill in `skills/`, poi:
+Il plugin è condiviso (installato da più persone via Claude Cowork), quindi
+le modifiche vanno rilasciate via **pull request**, non push diretto su
+`main`: Cowork sincronizza automaticamente la marketplace solo quando una PR
+che include un bump di versione viene mergiata su `main` — un push diretto
+non triggera il sync, e chi ha già installato il plugin resta bloccato sulla
+versione vecchia anche disinstallando/reinstallando.
+
 ```
-# bump della versione in .claude-plugin/plugin.json, quindi:
-git add -A && git commit -m "…" && git push
+git checkout -b feat/nome-modifica
+# modifica le skill in skills/, poi bump di version in .claude-plugin/plugin.json
+git add -A && git commit -m "…"
+git push -u origin feat/nome-modifica
+gh pr create --fill
+# merge della PR su main → Cowork risincronizza da solo (fino a 30 min)
 ```
-Sulle altre macchine:
+
+Se serve un aggiornamento immediato senza aspettare: Cowork →
+*Organization settings → Plugins → aios → Update*.
+
+Su Claude Code CLI (non Cowork), l'update resta manuale su ogni macchina:
 ```
 /plugin marketplace update aios
 ```

@@ -65,6 +65,9 @@ data/
   contesto. Se non esiste, crea/aggiorna `.gitignore` con `.env`.
 - **key-metrics.md** è rigenerato da `refresh.py` a partire dal DB: contiene le
   metriche chiave in forma leggibile. Il `/prime` del Livello 1 lo carica già.
+  `refresh.py` scrive/aggiorna anche il frontmatter (`created:` la prima
+  volta, `updated:` ad ogni rigenerazione — stessa convenzione di
+  `aios-context`).
 
 ### 5. Refresh
 - `refresh.py`: esegue tutti i connettori, aggiorna il DB, **rigenera
@@ -82,6 +85,9 @@ data/
   dimostrare che Claude può interrogare i dati.
 - Ricorda all'utente: `/prime` a inizio sessione carica anche le metriche;
   `/refresh-data` quando vuole aggiornarle.
+- Appendi una riga a `.claude/log.md`:
+  `- YYYY-MM-DD · aios-data · Livello 2 Dati costruito (N sorgenti)` (o, per un
+  refresh con cambi di schema, una riga equivalente).
 - Se l'utente usa InfraOS (Livello 1), suggerisci un `/commit`.
 
 Contenuti generati per aziende italiane: **in italiano**.

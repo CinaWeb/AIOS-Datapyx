@@ -30,6 +30,8 @@ DataPyx, l'assistente diagnostico che aiuta a leggere la sfida del cliente
 — non genera infrastruttura — ma è il cuore analitico dell'AIOS: proponilo dopo
 il Livello 1 e tienilo disponibile in ogni momento, incluso il monitoraggio
 continuo (Fase 5 di DataPyx) quando il consulente torna con aggiornamenti.
+A fine diagnosi, DataPyx salva la sintesi in `.claude/context/decisioni.md`,
+così resta disponibile a `/prime` nelle sessioni successive.
 
 ## Flusso
 
@@ -59,6 +61,11 @@ Leggi/crea `.claude/aios-build.md` nella working dir: è lo stato del build.
 - Se non esiste, crealo dalla struttura in fondo a questo file.
 - Se esiste, è una ripresa: leggilo per sapere dove eri rimasto.
 
+Assicurati anche che esista `.claude/log.md` (registro lavori, crealo con
+header minimo se manca — vedi convenzione in `aios-context`). Non è lo stato
+del build, è la cronologia di cosa è stato fatto: le due cose non si
+sovrappongono.
+
 ### 2. Rileva lo stato reale
 Non fidarti solo della checklist: verifica gli artefatti sul disco e allinea le
 spunte.
@@ -83,8 +90,9 @@ conduca la sua intervista/costruzione. Non anticipare il suo lavoro.
 
 ### 5. Aggiorna e continua
 Al termine di ogni livello:
-- spunta il livello in `.claude/aios-build.md` con data (`YYYY-MM-DD`) e una riga
-  su cosa è stato prodotto;
+- spunta il livello in `.claude/aios-build.md` (aggiorna anche il tag
+  `updated:` in intestazione) e appendi una riga a `.claude/log.md`
+  (`- YYYY-MM-DD · aios · Livello N <nome> completato — <cosa prodotto>`);
 - se l'utente usa InfraOS, suggerisci `/commit`;
 - **appena completato il Contesto (Livello 1), proponi la diagnosi con `datapyx`**
   prima di procedere ai Dati: aiuta a mettere a fuoco la sfida reale del cliente e
@@ -102,9 +110,15 @@ riunioni, **`datapyx` per diagnosticare/monitorare la sfida del cliente**,
 ## Template `.claude/aios-build.md`
 
 ```markdown
+---
+created: YYYY-MM-DD
+updated: YYYY-MM-DD
+---
+
 # AIOS build — {{cliente}}
 
 Stato di costruzione dell'AIOS. Aggiornato dall'orchestratore `aios`.
+Log dei lavori: vedi `.claude/log.md`.
 
 - [ ] 1. Contesto (aios-context) — contesto + brand + /prime
 - [ ] (opz.) Diagnosi sfida cliente (datapyx) — trasversale, ripetibile
@@ -112,9 +126,6 @@ Stato di costruzione dell'AIOS. Aggiornato dall'orchestratore `aios`.
 - [ ] 3. Intelligence (aios-intel) — meeting + /catchup
 - [ ] 4. Automazioni (aios-automation) — roadmap + automazioni
 - [ ] 5. Dashboard (aios-dashboard) — pannello localhost
-
-## Log
-<!-- una riga per livello completato: data + cosa prodotto -->
 ```
 
 Contenuti generati per aziende italiane: **in italiano**.

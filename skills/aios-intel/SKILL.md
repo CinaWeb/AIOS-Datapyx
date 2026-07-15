@@ -76,6 +76,11 @@ data/
 - Fai una **query di prova** (es. "elenca in ordine di priorità le decisioni
   dell'ultimo meeting") per dimostrare l'interrogabilità.
 - Ricorda: i meeting NON entrano nel `/prime` (troppo voluminosi); si interrogano
-  a voce libera o con `/catchup`. Se l'utente usa InfraOS, suggerisci un `/commit`.
+  a voce libera o con `/catchup`.
+- Appendi una riga a `.claude/log.md`:
+  `- YYYY-MM-DD · aios-intel · Livello 3 Intelligence costruito (connettore <tool>)`.
+  Anche `/collect-meetings` appende una riga quando porta nuovi meeting
+  significativi (non per ogni singolo meeting).
+- Se l'utente usa InfraOS, suggerisci un `/commit`.
 
 Contenuti generati per aziende italiane: **in italiano**.

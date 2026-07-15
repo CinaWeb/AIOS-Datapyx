@@ -62,6 +62,7 @@ Crea nella working dir:
 CLAUDE.md                    # identità azienda + istruzione a leggere il contesto e usare /prime
 .claude/context/*.md         # set FLESSIBILE — vedi sotto
 .claude/commands/prime.md    # slash command che carica tutti i file di contesto
+.claude/log.md               # registro lavori — vedi convenzione più sotto
 ```
 
 **File di contesto — set flessibile.** Parti da questi quattro e aggiungi/togli
@@ -72,6 +73,28 @@ in base a cosa è realmente emerso:
 - `dati-correnti.md` — numeri chiave: fatturato, clienti attivi, conversion rate, ostacoli, capacità del team
 Aggiungi es. `team.md`, `competitor.md`, `prodotti.md` **solo se** il materiale
 lo giustifica. Non creare file vuoti o riempitivi.
+
+**Convenzione data — frontmatter su ogni file di stato/conoscenza.** Ogni file
+in `.claude/context/*.md` e `.claude/context/brand/*.md` inizia con:
+```yaml
+---
+created: YYYY-MM-DD
+updated: YYYY-MM-DD
+---
+```
+`created:` si scrive una sola volta, alla prima generazione del file; `updated:`
+si riscrive ad ogni modifica successiva (da questa skill o da qualunque altra
+che tocchi quel file — `aios-data`, `datapyx`…). Stessa convenzione si applica a
+`.claude/aios-build.md` e `automations/roadmap.md` (vedi skill `aios` e
+`aios-automation`). Non si applica a `.claude/commands/*.md` (SOP statiche, non
+stato aziendale).
+
+**Registro lavori `.claude/log.md`.** Se non esiste, crealo con un header
+minimo (`# Log — {{cliente}}` + una riga di spiegazione: append-only, una riga
+per lavoro completato). Al termine di questo livello, appendi:
+`- YYYY-MM-DD · aios-context · Livello 1 Contesto costruito (+ brand se creato)`.
+Ogni altra skill del plugin fa lo stesso alla fine del proprio lavoro — non
+per ogni micro-step, solo per lavori conclusi.
 
 **CLAUDE.md** deve: descrivere in breve l'azienda e il ruolo dell'utente;
 istruire a leggere i file in `.claude/context/`; indicare di eseguire `/prime` a
@@ -84,6 +107,13 @@ contenuto esistente.
 un riepilogo sintetico di chi è l'utente, cosa fa l'azienda, priorità e numeri
 chiave. Scrivi le istruzioni del comando così che restino valide anche quando i
 file di contesto crescono (nuovi file di contesto, `history.md` di InfraOS…).
+
+**prime.md — retention del log.** Il comando controlla anche la data della
+voce **più vecchia** in `.claude/log.md` (non lo legge tutto, solo la prima
+riga di log). Se risale a più di **3 mesi fa**, segnalalo e chiedi: *"Il log
+lavori ha voci più vecchie di 3 mesi — vuoi che le archivi in
+`.claude/log-archivio.md` o che le elimini?"*. Non pulire mai senza chiedere;
+se l'utente non risponde o rifiuta, non insistere nella stessa sessione.
 
 Tutti i contenuti generati per aziende italiane vanno **in italiano**.
 

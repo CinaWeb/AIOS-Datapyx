@@ -52,6 +52,8 @@ dashboard/
   compaia in pagina.
 - Spiega all'utente come avviarla (`/dashboard` o `python dashboard/server.py`) e
   che è condivisibile con collaboratori sulla stessa macchina/rete locale.
+- Appendi una riga a `.claude/log.md`:
+  `- YYYY-MM-DD · aios-dashboard · Livello 5 Dashboard costruito`.
 - Se l'utente usa InfraOS, suggerisci `/commit`.
 
 Contenuti generati per aziende italiane: **in italiano**.

@@ -52,9 +52,12 @@ che *esegui*, `/challenge` ciò che *giudichi*.
 ## Flusso
 
 ### 1. Contesto
-Leggi `.claude/context/`. Ti dice di cosa si occupa l'azienda e su quali aree ha
-senso automatizzare. Se manca, avvisa che l'audit sarà meno mirato e chiedi se
-procedere o costruire prima il contesto (`aios-context`).
+Leggi **tutto** `.claude/context/`, inclusa la sottocartella `brand/` (colori,
+font, tono di voce) e `decisioni.md` se presente (punti di leva dalla diagnosi
+DataPyx — orientano quali aree scavare per prime nell'audit). Ti dice di cosa si
+occupa l'azienda, su quali aree ha senso automatizzare e, se già diagnosticata,
+dove intervenire con priorità. Se manca, avvisa che l'audit sarà meno mirato e
+chiedi se procedere o costruire prima il contesto (`aios-context`).
 
 ### 2. Audit area per area
 Segui `references/audit-guide.md`. Per ogni area (marketing, vendite, gestione
@@ -65,7 +68,9 @@ clienti, operations, finanza, dati) individua i **task ripetitivi** e le
 Scrivi/aggiorna `automations/roadmap.md`: elenco **prioritizzato** delle
 opportunità, ognuna con area, descrizione, valore atteso e **stato**
 (`⬜ da fare` / `✅ fatta`). È il documento strategico persistente: se esiste già,
-aggiornalo senza perdere le voci precedenti.
+aggiornalo senza perdere le voci precedenti. Il file inizia con frontmatter
+`created:`/`updated:` (stessa convenzione di `aios-context`); aggiorna
+`updated:` ad ogni modifica della roadmap.
 
 ### 4. Per ogni automazione — chiedi conferma
 Partendo dalla più prioritaria, **chiedi all'utente se costruirla ora**:
@@ -95,7 +100,10 @@ data/database.db               # nuove tabelle se l'automazione le richiede
 Per ogni automazione costruita fai un **test reale** e mostra l'output (es.
 genera una fattura di prova e mostra il PDF/i dati). Se il test fallisce, applica
 l'**auto-correzione DOE**: correggi lo script e aggiorna la direttiva (il comando),
-poi ri-testa — non aggirare il problema a mano. Aggiorna la roadmap. Se l'utente
-usa InfraOS, suggerisci `/commit` per versionare automazione e correzioni.
+poi ri-testa — non aggirare il problema a mano. Aggiorna la roadmap (`updated:`
+incluso). Appendi una riga a `.claude/log.md`:
+`- YYYY-MM-DD · aios-automation · Automazione /<nome> costruita e testata`.
+Se l'utente usa InfraOS, suggerisci `/commit` per versionare automazione e
+correzioni.
 
 Contenuti generati per aziende italiane: **in italiano**.

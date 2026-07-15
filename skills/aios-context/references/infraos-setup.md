@@ -23,6 +23,11 @@ Crea `history.md` nella root: un **diario append-only** delle sessioni. Ogni
 entry: data (`YYYY-MM-DD`), cosa è stato fatto, perché. Serve a riprendere il
 lavoro in sessioni successive senza ricominciare.
 
+Non confonderlo con `.claude/log.md`: quest'ultimo è il registro trasversale
+per-skill (sempre presente, indipendente da InfraOS), `history.md` è il
+diario di sessione legato ai commit. Se InfraOS è attivo, `/commit` versiona
+anche `.claude/log.md` come qualunque altro file — non serve logica aggiuntiva.
+
 ### 3. Comando /commit
 Crea `.claude/commands/commit.md`. Il comando deve:
 1. Scansionare i file modificati nella working dir (`git status`).

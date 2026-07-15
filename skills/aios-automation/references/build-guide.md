@@ -55,6 +55,28 @@ numerazione progressiva e restituisce il PDF.
 **Test:** "crea una fattura per Marco Bianchi, call di strategia, €150" → trova/
 crea il cliente, numera progressivo, produce il PDF, lo mostra.
 
+## Automazioni di contenuto (blog, newsletter, social, comunicazioni esterne)
+Qui l'errore non è tecnico ma "fuori brand": testo generico, tono sbagliato,
+target mancato. La direttiva (`.claude/commands/<nome>.md`) deve istruire a
+leggere, **prima di ogni generazione**:
+- `.claude/context/brand/` — colori, font, tono di voce (se presente in
+  `brand-identity.md`);
+- `.claude/context/azienda.md` — settore, prodotti, clienti target;
+- `.claude/context/decisioni.md`, se esiste — punti di leva/priorità dalla
+  diagnosi, utili a scegliere temi rilevanti;
+- gli **output precedenti della stessa automazione**, per continuità di stile
+  (vedi sotto).
+
+Se il target nel contesto è troppo generico per scrivere contenuti mirati
+(manca tono di voce preferito, pain point, cosa evitare), chiedilo ora invece
+di assumere — non generare a vuoto.
+
+**Storico come memoria di stile:** lo script salva ogni output generato in
+`automations/<nome>/output/` (es. `2026-07-15-post-blog.md`). Non serve un
+sistema di memoria a parte: la direttiva stessa istruisce a leggere gli ultimi
+2-3 file di quella cartella prima di generarne uno nuovo, così il tono resta
+coerente nel tempo senza richiedere ogni volta le stesse informazioni.
+
 ## Principi
 - Una automazione = uno scopo chiaro. Meglio tante piccole che una monolitica.
 - Fallire in modo pulito: input mancanti → chiedi, non crashare.

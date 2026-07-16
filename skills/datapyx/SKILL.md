@@ -249,6 +249,8 @@ REGOLE
  
 · Se la situazione è ancora confusa dopo la diagnosi, dillo esplicitamente
  
+· Se il consulente **corregge esplicitamente** una diagnosi (il problema reale non era quello, un punto di leva era sbagliato), **invoca la skill `aios-learn`**: la correzione è spesso una lezione sul cliente. `aios-learn` classifica e chiede conferma prima di scrivere — non scrivere tu direttamente in `lezioni.md`.
+ 
 · Frasi brevi e precise · Usa il "tu" con il consulente
  
 ---

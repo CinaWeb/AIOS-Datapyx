@@ -481,6 +481,20 @@ vecchia: se supera i **3 mesi**, te lo segnala e chiede se vuoi archiviarla
 (spostata in `.claude/log-archivio.md`, senza perderla) o eliminarla. Non lo
 fa mai da solo senza chiedere.
 
+### L'AIOS impara dai tuoi feedback
+
+Man mano che lo usi, l'AIOS **ricorda le correzioni**. Se dici a Claude che una
+diagnosi era sbagliata, o che il cliente rifiuta sempre un certo tipo di proposta,
+lui te lo propone come **lezione** da salvare (in `.claude/context/lezioni.md`):
+tu confermi, e da quel momento `/prime` la ricarica ogni volta. Non scrive mai
+niente senza chiedertelo.
+
+In più, ad ogni `/prime`, dopo il riepilogo Claude può aggiungere qualche
+**"Prospettiva"**: un angolo nuovo, un rischio che nessuno ha ancora nominato, un
+collegamento tra cose che sapevi ma non avevi messo insieme. Sono spunti per
+pensare, tenuti separati dai fatti — se non ha nulla di utile da dire, non li
+mostra.
+
 ---
 
 ## 6. Aggiornare, riprendere, più macchine
@@ -547,8 +561,9 @@ Studio Rossi/                        ← la cartella = l'AIOS del cliente
 ├── .claude/
 │   ├── aios-build.md                # promemoria: a che punto è la costruzione
 │   ├── log.md                       # registro lavori: cosa è stato fatto e quando
+│   ├── aios-feedback-prodotto.md    # frizioni sull'uso di AIOS (per chi sviluppa il plugin)
 │   ├── context/                     # azienda, strategia, team, key-metrics,
-│   │                                 #   decisioni.md (diagnosi DataPyx)…
+│   │                                 #   decisioni.md (diagnosi DataPyx), lezioni.md (cose imparate)…
 │   └── commands/                    # /prime, /refresh-data, /catchup, /crea-fattura, /dashboard…
 ├── brand/                           # colori, tipografia, logo, asset
 ├── data/

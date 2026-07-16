@@ -47,6 +47,19 @@ questionario: sii curioso, segui i fili interessanti, ma copri tutte le aree.
 - Ostacolo principale percepito
 - Capacità del team: sotto pressione o c'è spazio per crescere?
 
+### E. Procedure (task ricorrenti con un metodo fisso)
+Chiedi se ci sono cose che l'utente rifà spesso **sempre con lo stesso schema** —
+non importa se operative o creative. Esempi per orientare la domanda, non da
+recitare come lista: come scrive un articolo di blog, come struttura una
+campagna Facebook, come prepara un preventivo, come gestisce un reclamo. Per
+ognuna che emerge:
+- I passi, nell'ordine in cui li segue davvero (non quello "da manuale")
+- Cosa NON deve mai mancare (es. tono di voce, CTA, dati obbligatori)
+- Un esempio concreto già fatto bene, se ce l'ha a portata di mano
+Salta questa sezione se l'utente non ha task con un metodo ripetibile (es.
+lavoro troppo vario o troppo giovane per aver fissato uno schema) — non
+inventare procedure che non esistono.
+
 ## Chiusura dell'intervista
 Prima di scrivere i file, riepiloga tutto e chiedi il **nome dell'utente** e il
 **nome dell'azienda** (servono per personalizzare CLAUDE.md e i file). Poi passa

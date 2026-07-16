@@ -30,7 +30,11 @@ hai appena letto. Copri (adatta all'AIOS reale, salta il non pertinente):
 5. **Azioni aperte** — cosa resta da fare, con eventuale scadenza.
 
 Una domanda alla volta, brevi. Sfida ciò che non torna (una decisione che
-contraddice la strategia nei file → chiedi conferma prima di registrarla).
+contraddice la strategia nei file → chiedi conferma prima di registrarla). Se la
+contraddizione è **confermata** dall'utente, **invoca la skill `aios-learn`**: può
+essere una lezione da ricordare (la strategia sta cambiando, o è emersa una regola
+implicita). `aios-learn` classifica e chiede conferma prima di scrivere — non
+scrivere tu direttamente in `lezioni.md`.
 
 ## 3. Recap prima di scrivere
 Prima di toccare qualsiasi file, mostra **cosa hai capito** e **l'elenco preciso

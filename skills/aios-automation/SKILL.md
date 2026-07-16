@@ -109,3 +109,12 @@ Se l'utente usa InfraOS, suggerisci `/commit` per versionare automazione e
 correzioni.
 
 Contenuti generati per aziende italiane: **in italiano**.
+
+## Feedback di processo
+
+Se durante questo livello l'utente segnala che **una domanda o uno step è
+superfluo, confuso o sbagliato** (attrito nell'uso di AIOS, non un fatto sul suo
+business), **invoca la skill `aios-learn`**: registra la frizione in
+`.claude/aios-feedback-prodotto.md` per la revisione del maintainer. `aios-learn`
+classifica e chiede conferma prima di scrivere — non è una lezione di business e
+non va in `lezioni.md`.

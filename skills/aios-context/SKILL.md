@@ -71,6 +71,13 @@ in base a cosa è realmente emerso:
 - `personale.md` — ruolo dell'utente, responsabilità, come passa il tempo, background, a cosa vuole usare l'AIOS
 - `strategia.md` — priorità attuali, obiettivi, strategia di crescita, visione a lungo termine
 - `dati-correnti.md` — numeri chiave: fatturato, clienti attivi, conversion rate, ostacoli, capacità del team
+- `procedure.md` — **solo se emergono task ricorrenti con un metodo fisso** (es.
+  come si scrive un articolo di blog, come si struttura una campagna Facebook,
+  come si prepara un preventivo, come si gestisce un reclamo): i passi, nell'ordine
+  in cui li segue l'utente, così l'AI li applica senza doverseli far rispiegare.
+  Non è la roadmap di automazione (quella è `automations/roadmap.md` nel Livello
+  4): qui si cattura *come si fa* una cosa, a prescindere dal fatto che verrà mai
+  automatizzata.
 Aggiungi es. `team.md`, `competitor.md`, `prodotti.md` **solo se** il materiale
 lo giustifica. Non creare file vuoti o riempitivi.
 
@@ -104,10 +111,25 @@ nel CLAUDE.md. Se un CLAUDE.md esiste già, integralo senza distruggere il
 contenuto esistente.
 
 **prime.md** deve leggere tutti i file in `.claude/context/` (incluso
-`.claude/context/key-metrics.md` del livello Dati/DataOS, se presente) e produrre
+`.claude/context/key-metrics.md` del livello Dati/DataOS, se presente, e
+`.claude/context/lezioni.md` o `.claude/context/lezioni/` se presenti) e produrre
 un riepilogo sintetico di chi è l'utente, cosa fa l'azienda, priorità e numeri
 chiave. Scrivi le istruzioni del comando così che restino valide anche quando i
 file di contesto crescono (nuovi file di contesto, `history.md` di InfraOS…).
+
+**prime.md — prospettive proattive.** Come **ultimo passo**, dopo il riepilogo, il
+comando deve **invocare la skill `aios-learn`** per valutare se emergono
+prospettive proattive (angoli nuovi, rischi non ancora nominati, connessioni tra
+fatti noti). NON scrivere nel comando *come* si generano le prospettive: quella
+logica vive in `aios-learn` (`references/perspectives-guide.md`) ed è risolta a
+runtime, così un miglioramento futuro si applica a tutti i clienti senza
+rigenerare `prime.md`. Il comando contiene solo il puntatore. Se `aios-learn` non
+produce nulla di genuino, il passo è silenziosamente vuoto.
+
+**Clienti esistenti (migrazione).** Un `prime.md` generato prima di questa
+funzione non ha il puntatore ad `aios-learn`. In modalità *update* (§1),
+segnalalo esplicitamente e proponi di rigenerare/aggiornare `prime.md` per
+aggiungere il passo prospettive. Non è una modifica silenziosa.
 
 **prime.md — retention del log.** Il comando controlla anche la data della
 voce **più vecchia** in `.claude/log.md` (non lo legge tutto, solo la prima
@@ -151,3 +173,12 @@ A generazione completata, chiedi se vuole **versionare l'AIOS con Git/GitHub**
 Dì all'utente di **aprire una nuova sessione e lanciare `/prime`** per caricare
 il contesto. Se ha attivato InfraOS, ricordagli il flusso: `/prime` a inizio
 sessione, `/commit` a fine sessione.
+
+## Feedback di processo
+
+Se durante questo livello l'utente segnala che **una domanda o uno step è
+superfluo, confuso o sbagliato** (attrito nell'uso di AIOS, non un fatto sul suo
+business), **invoca la skill `aios-learn`**: registra la frizione in
+`.claude/aios-feedback-prodotto.md` per la revisione del maintainer. `aios-learn`
+classifica e chiede conferma prima di scrivere — non è una lezione di business e
+non va in `lezioni.md`.

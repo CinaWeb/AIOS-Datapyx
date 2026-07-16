@@ -8,11 +8,19 @@ Come costruire UNA automazione dopo che l'utente ha confermato. Ogni automazione
    schedulata, casi limite. Non assumere.
 2. **Approccio** — presenta cosa serve: librerie Python (installa solo il
    necessario), nuove tabelle nel DB, script, template. Conferma.
-3. **Costruisci** — comando + script + tabelle. Riusa `data/database.db` e i file
+3. **Verifica connessioni esterne (se presenti)** — se l'automazione dipende da
+   un'API o un servizio esterno (email, gestionale, Stripe, calendario...), prima
+   di scrivere la logica completa testa la connessione con uno script minimale
+   (probe): credenziali valide, endpoint raggiungibile, risposta come atteso.
+   **Collegamento rotto o credenziale mancante → fermati** e segnalalo
+   all'utente invece di costruire sopra un'integrazione non verificata. Salta
+   questo passo per automazioni che lavorano solo su `data/database.db` e file
+   locali.
+4. **Costruisci** — comando + script + tabelle. Riusa `data/database.db` e i file
    di contesto invece di duplicare dati.
-4. **Testa davvero** — esegui l'automazione con dati reali/di prova e mostra
+5. **Testa davvero** — esegui l'automazione con dati reali/di prova e mostra
    l'output.
-5. **Roadmap** — marca l'automazione `✅ fatta` in `automations/roadmap.md`.
+6. **Roadmap** — marca l'automazione `✅ fatta` in `automations/roadmap.md`.
 
 ## Anatomia di un'automazione (mapping DOE)
 ```

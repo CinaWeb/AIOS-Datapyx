@@ -27,7 +27,7 @@ Automazioni → Controllo**.
 
 ## Cosa contiene
 
-**8 skill + 4 comandi (`/challenge`, `/aios-help`, `/debrief`, `/client-brief`).** Entry point:
+**9 skill + 1 motore interno (`aios-learn`) + 4 comandi (`/challenge`, `/aios-help`, `/debrief`, `/client-brief`).** Entry point:
 - **`aios`** — orchestratore: rileva lo stato, mantiene una checklist persistente
   (`.claude/aios-build.md`) e un registro lavori trasversale (`.claude/log.md`),
   esegue i 5 livelli in ordine invocando le skill sotto.
@@ -54,6 +54,15 @@ Gate epistemologico:
   dell'AIOS, speculare alla disciplina **DOE** che rende affidabile la metà
   **deterministica** (le automazioni). Gate on-demand per decisioni ad alta posta.
 
+Motore interno (non esposto come comando):
+- **`aios-learn`** — apprendimento dell'AIOS: trasforma correzioni ed errori in
+  regole permanenti per quel cliente (`.claude/context/lezioni.md`, letto da
+  `/prime`) o in feedback di processo sul prodotto
+  (`.claude/aios-feedback-prodotto.md`, per il maintainer), e ad ogni `/prime`
+  genera **prospettive proattive**. Invocato internamente da `challenge`,
+  `debrief`, `datapyx`, dai livelli e da `/prime` — mai scrittura silenziosa
+  (chiede sempre conferma).
+
 Dipendenze di brand (incluse per self-containment):
 - **`client-project-kickoff`** — scaffolding + brand identity (estrae da sito o
   **crea da zero via brandkit**)
@@ -64,6 +73,7 @@ Dipendenze di brand (incluse per self-containment):
 aios → aios-context, aios-data, aios-intel, aios-automation, aios-dashboard
 aios-context → client-project-kickoff → brandkit
 aios ─(offre dopo il Contesto)→ datapyx   [diagnostica trasversale, ripetibile]
+challenge, debrief, datapyx, i 5 livelli, /prime ─→ aios-learn   [motore interno]
 ```
 Le skill si richiamano **per nome/descrizione**: funzionano anche namespaced come
 `aios:aios-context`.
@@ -223,7 +233,7 @@ Le due sono speculari: DOE evita l'errore di *esecuzione*, `/challenge` l'errore
 
 ## Memoria persistente
 
-Due meccanismi trasversali, indipendenti da InfraOS/Git, tengono l'AIOS coerente
+Tre meccanismi trasversali, indipendenti da InfraOS/Git, tengono l'AIOS coerente
 tra una sessione e l'altra:
 
 - **`.claude/log.md`** — registro cronologico append-only: ogni skill vi aggiunge
@@ -235,10 +245,17 @@ tra una sessione e l'altra:
 - **Frontmatter datato** — ogni file di stato/conoscenza (`.claude/context/*.md`,
   `brand/*.md`, `automations/roadmap.md`, `.claude/aios-build.md`) porta in testa
   `created:`/`updated:` in YAML, aggiornati dalla skill che lo scrive.
+- **Apprendimento (`aios-learn`)** — le correzioni ripetute diventano regole
+  permanenti in `.claude/context/lezioni.md` (lette da `/prime`); le frizioni sul
+  prodotto vanno in `.claude/aios-feedback-prodotto.md` (revisione del maintainer,
+  mai promosse automaticamente). Ad ogni `/prime`, `aios-learn` propone anche
+  **prospettive proattive** — angoli nuovi e rischi non ancora nominati, distinti
+  dai fatti. Ogni cattura chiede conferma: mai scrittura silenziosa.
 
-Questi due pezzi mappano la "memoria episodica" (log) e la "memoria semantica"
-(contesto datato) di un'architettura di memoria per agenti AI a più livelli — il
-resto (working memory, skill) lo gestisce Claude Code nativamente.
+Questi tre pezzi mappano la "memoria episodica" (log), la "memoria semantica"
+(contesto datato) e la "memoria procedurale" (lezioni apprese via `aios-learn`) di
+un'architettura di memoria per agenti AI a più livelli — il resto (working memory,
+skill) lo gestisce Claude Code nativamente.
 
 ---
 
@@ -251,8 +268,9 @@ resto (working memory, skill) lo gestisce Claude Code nativamente.
 ├── .claude/
 │   ├── aios-build.md               # stato costruzione (checklist, con created:/updated:)
 │   ├── log.md                      # registro lavori trasversale (per-skill, con data)
+│   ├── aios-feedback-prodotto.md   # frizioni di processo su AIOS (per il maintainer)
 │   ├── context/                    # azienda, personale, strategia, key-metrics,
-│   │                                #   decisioni.md (DataPyx) — tutti con created:/updated:
+│   │                                #   decisioni.md (DataPyx), lezioni.md (aios-learn) — con created:/updated:
 │   └── commands/                   # /prime, /refresh-data, /catchup, /dashboard, …
 ├── brand/                          # brand-identity, colors, typography, logo, assets/ — idem
 ├── data/

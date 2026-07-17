@@ -41,9 +41,26 @@ dashboard/
   funnel, automazioni, ultimi meeting, overview). Sezioni assenti → omesse.
 - **Launcher**: un bottone per ogni comando in `.claude/commands/`. Al click
   esegue `claude -p "<comando>"` nella cartella del cliente e mostra l'output.
-- **Sicurezza (non negoziabile):** il server ascolta solo su `127.0.0.1`; il
-  campo dei comandi eseguibili è una **allowlist** dei comandi scoperti in
-  `.claude/commands/`, mai input arbitrario dall'esterno. Vedi build-guide.
+- **Contribuisci**: un blocco dedicato con campo testo + campo **operatore**, che
+  lancia il comando plugin-level `/contribuisci` (vedi sotto).
+- **Sicurezza (non negoziabile):** il server ascolta di **default** solo su
+  `127.0.0.1`; il campo dei comandi eseguibili è una **allowlist** (i comandi
+  scoperti in `.claude/commands/` + `/contribuisci`), mai input arbitrario
+  dall'esterno. Vedi build-guide.
+
+### 2b. Multi-operatore (se il cliente ha più operatori)
+Chiedilo: *"la dashboard la userai solo tu, o anche altre persone?"*. Se è
+condivisa:
+- **Blocco "Contribuisci"** — campo testo libero + campo "chi sei", che al click
+  esegue `claude -p "/contribuisci <operatore>: <testo>"`. Il contributo non
+  contraddittorio finisce da solo nelle lezioni, quello contraddittorio in coda
+  per il curatore (`/rivedi-proposte`). Il nome dell'operatore va ricordato nel
+  browser, non richiesto ad ogni invio.
+- **Bind in rete** — di default resta `127.0.0.1`. Per renderla raggiungibile
+  dagli altri, il server legge `AIOS_DASHBOARD_HOST`/`AIOS_DASHBOARD_PORT`: è un
+  **opt-in esplicito** di chi la avvia, mai il default che generi tu. Spiega che
+  esporla significa che chiunque in quella rete può lanciare i comandi dell'AIOS:
+  va bene in una LAN aziendale, non su una rete aperta.
 
 ### 3. Avvia e verifica
 - Avvia il server (`python dashboard/server.py`), apri `http://127.0.0.1:<porta>`

@@ -28,6 +28,25 @@ JTBD, feedback loop, dati Q+) restano da fare.
 progressi del giorno in `context` + `history.md`) e aggiunto **`/client-brief`**
 (intelligence pre-call). Restano da fare gli agenti specialisti sopra.
 
+## Apprendimento e multi-operatore
+
+✅ **Fatto (v0.5.0):** motore interno **`aios-learn`** — le correzioni diventano
+lezioni permanenti del cliente (`.claude/context/lezioni.md`) o feedback di
+processo sul prodotto; prospettive proattive ad ogni `/prime`.
+
+✅ **Fatto (v0.6.0):** **arricchimento multi-operatore** sopra `aios-learn` —
+seconda modalità (operatore/async) con promozione automatica contradiction-gated,
+coda conflitti `enrichment/proposals/`, comandi `/contribuisci` e
+`/rivedi-proposte`, dashboard con bind configurabile e attribuzione. Chiude il
+"domain brain per contributor" che la vecchia bozza *Company Brain* lasciava
+scoperto.
+
+Restano da fare, su questo filone:
+- **Collaudo multi-operatore su un cliente reale**: il flusso è scritto ma non è
+  ancora girato con più persone su una cartella condivisa.
+- **Deployment di riferimento**: il design è host-agnostico (contratto storage +
+  compute always-on); manca una ricetta concreta provata su un host (NAS/VM).
+
 ## Backlog / candidati
 - **Persistenza della diagnosi**: salvare l'output DataPyx (problema reale, leve,
   scenari, segnalpost) in un file del cliente, così `/prime` lo ricarica e la

@@ -354,14 +354,21 @@ Scrivi:
 ```
 
 Claude avvia un piccolo server locale e apre il browser su un indirizzo tipo
-`http://127.0.0.1:8000`. Vedrai: riepilogo azienda, metriche, funnel, stato delle
+`http://127.0.0.1:8787`. Vedrai: riepilogo azienda, metriche, funnel, stato delle
 automazioni, ultime riunioni, e un bottone per ogni comando (es. *"Aggiorna dati"*,
 *"Catch-up riunioni"*). Clicchi il bottone → Claude esegue → l'output compare nella
 pagina.
 
-> **È sicuro?** Sì: il pannello è visibile **solo sul tuo computer** (o sulla tua
-> rete locale), non su internet, e i bottoni possono lanciare **solo** i comandi
-> del tuo AIOS, niente di arbitrario.
+Claude ti chiede anche se la dashboard **la userai solo tu o anche altri**. Se è
+condivisa, aggiunge un riquadro **"Contribuisci"** dove i colleghi scrivono chi
+sono e cosa hanno notato sul campo (vedi §5).
+
+> **È sicuro?** Di default sì: il pannello è visibile **solo sul tuo computer**
+> (`127.0.0.1`), non su internet, e i bottoni possono lanciare **solo** i comandi
+> del tuo AIOS, niente di arbitrario. Se lo apri agli altri
+> (`AIOS_DASHBOARD_HOST`, vedi §5) allora chiunque raggiunga quella pagina sulla
+> rete può lanciare quei comandi: va bene sulla rete dell'ufficio, non su una rete
+> aperta o un WiFi pubblico.
 
 > ✅ **Traguardo:** anche un collega non tecnico usa l'AIOS con un click.
 
@@ -453,6 +460,8 @@ Una volta costruito l'AIOS, il lavoro di ogni giorno è semplice:
 | Stressare una decisione | `/challenge` | Red-team + verdetto |
 | Fare un'operazione | `/<automazione>` | Es. `/crea-fattura` |
 | Il pannello visivo | `/dashboard` | Apre la dashboard |
+| Un collega ha notato qualcosa | `/contribuisci <chi sei>: <cosa>` | Lo aggiunge alle lezioni, o lo mette in coda se contraddice (di solito si fa dal riquadro della dashboard) |
+| `/prime` dice "2 proposte in attesa" | `/rivedi-proposte` | Le vedi una alla volta e decidi: promuovi, rifiuta, riscrivi |
 | **Chiudi la giornata** | `/debrief` | Claude ti fa qualche domanda e aggiorna il contesto coi progressi del giorno |
 | Salva/versiona | `/commit` | Mette al sicuro il lavoro (se hai InfraOS) |
 
@@ -545,6 +554,10 @@ NAS, un server, una VM): non una copia per computer, o tornano i silos.
 - **Più computer:** installa il plugin su ognuno (§1). La cartella del cliente la
   sposti/sincronizzi tu come un normale insieme di file (es. cartella cloud o Git
   se usi InfraOS).
+- **Più persone sullo stesso AIOS:** è un caso diverso dal precedente. Lì non
+  vuoi *copie* sincronizzate ma **una sola cartella viva** in un posto sempre
+  acceso, con gli altri che la usano dalla dashboard (§5). Copie per persona =
+  silos, cioè il problema che l'AIOS dovrebbe risolvere.
 
 ---
 
@@ -582,6 +595,22 @@ Sì. Anche solo il Contesto (Livello 1) è utile. Aggiungi gli altri quando vuoi
 No: a ogni `/prime` Claude controlla se ci sono voci più vecchie di 3 mesi e,
 solo in quel caso, ti chiede se archiviarle o eliminarle. Non lo fa mai senza
 chiedertelo prima.
+
+**"Se do la dashboard ai miei collaboratori, possono rovinare l'AIOS?"**
+No. Non toccano i file: scrivono nel riquadro *Contribuisci* e il resto lo fa
+Claude. Quello che aggiungono finisce nelle **lezioni**, mai nel contesto
+strategico (chi è l'azienda, la strategia, le procedure) — quello resta tuo. E se
+un contributo contraddice qualcosa che l'AIOS già sa, non entra affatto: aspetta te
+in coda (§5).
+
+**"Due persone che contribuiscono nello stesso momento si sovrascrivono?"**
+No: ogni contributo è una voce in append o un file suo, mai una riscrittura di
+quello che c'era. Per questo gli operatori non editano i file a mano — è proprio
+lì che nascerebbero i conflitti.
+
+**"Ho aggiornato il plugin: devo rifare qualcosa negli AIOS già costruiti?"**
+No. `/contribuisci` e `/rivedi-proposte` arrivano col plugin, e la segnalazione
+delle proposte in attesa passa da `/prime` che ce l'ha già. Niente da rigenerare.
 
 ---
 

@@ -18,6 +18,7 @@ Automazioni → Controllo**.
   - [I 5 livelli, uno per uno](#i-5-livelli-uno-per-uno)
   - [Flusso operativo quotidiano](#flusso-operativo-quotidiano)
   - [Le due discipline: DOE e /challenge](#le-due-discipline-doe-e-challenge)
+  - [Più operatori: arricchire l'AIOS insieme](#più-operatori-arricchire-laios-insieme)
 - [Memoria persistente](#memoria-persistente)
 - [Cosa viene creato nella cartella del cliente](#cosa-viene-creato-nella-cartella-del-cliente)
 - [Aggiornare il plugin](#aggiornare-il-plugin)
@@ -190,8 +191,11 @@ la logica ripetibile sta nello script, non improvvisata dall'LLM.
 
 **5 · Dashboard — `aios-dashboard`**
 Pannello localhost riepilogativo del cliente: metriche, funnel, stato automazioni,
-ultimi meeting — più bottoni che lanciano i comandi e mostrano l'output.
-Condivisibile con collaboratori non tecnici. Avvio con `/dashboard`.
+ultimi meeting — più bottoni che lanciano i comandi e mostrano l'output. Avvio con
+`/dashboard`. Se il cliente ha più operatori, la dashboard è anche il loro punto di
+ingresso: blocco **Contribuisci** (con identità di chi scrive) e bind apribile in
+LAN via `AIOS_DASHBOARD_HOST` — default `127.0.0.1`. Vedi
+[Più operatori](#più-operatori-arricchire-laios-insieme).
 
 ### Flusso operativo quotidiano
 
@@ -208,6 +212,8 @@ Una volta costruito l'AIOS, il lavoro di tutti i giorni nella cartella del clien
 | Sfidare una diagnosi/decisione | `/challenge` | Gate epistemologico: red-team + verdetto, prima di agire su una scelta ad alta posta |
 | Automazioni | `/<nome-automazione>` | Es. `/crea-fattura` |
 | Pannello | `/dashboard` | Apre la dashboard localhost |
+| Un operatore ha imparato qualcosa | `/contribuisci <autore>: <contributo>` | Arricchisce le lezioni: entra da solo se non contraddice, altrimenti va in coda |
+| Proposte in attesa (lo dice `/prime`) | `/rivedi-proposte` | Il curatore risolve i contributi in contraddizione: promuovi / rifiuta / riformula |
 | Fine sessione | `/debrief` | Consolida i progressi del giorno nel contesto + `history.md` |
 | Salvare/versionare | `/commit` | Salva e versiona l'AIOS (se InfraOS attivo) |
 
@@ -242,6 +248,44 @@ Un AIOS ha due metà con rischi opposti, e una disciplina per ciascuna:
   ad alta posta o diagnosi a confidenza Media/Ipotesi, non su ogni frase. `datapyx`
   lo propone dopo la diagnosi (FASE 4) e nel pre-mortem.
 
+### Più operatori: arricchire l'AIOS insieme
+
+Se l'AIOS è il cervello di un'azienda, chi ci lavora dentro (comunicazione, lead,
+post) sa cose che il curatore non sa — ma farlo scrivere nei file a mano è il modo
+più rapido per romperlo. Quindi non scrive: **contribuisce**.
+
+```
+operatore ──[bottone dashboard]──→ /contribuisci Marco: <cosa ha notato>
+                                          │
+                                    aios-learn (modalità operatore)
+                                          │
+                        ┌─────────────────┴─────────────────┐
+              non contraddice                          contraddice
+                        │                                   │
+            append automatico in                enrichment/proposals/
+         context/lezioni.md (autore+data)      → /rivedi-proposte (curatore)
+```
+
+- **Tre zone di scrittura.** Il **core strategico** (`azienda.md`, `strategia.md`,
+  `procedure.md`) è sola lettura per tutti, scrivibile solo dal curatore: poche
+  entità, alta coerenza, l'enrichment automatico lo diluirebbe. La **zona
+  arricchimento** (output automazioni, righe di DB, lezioni) è append-only, un file
+  per output → zero collisioni. La **coda conflitti** raccoglie solo le
+  contraddizioni, non tutto.
+- **L'HITL non sparisce, si sposta.** In sessione ogni cattura chiede conferma; in
+  modalità operatore nessuno è lì per darla, quindi la conferma si sposta sulle
+  sole **contraddizioni**. Il non contraddittorio fluisce (il filone resta vivo),
+  il contraddittorio aspetta. Nel dubbio, coda.
+- **Il curatore quasi sparisce.** Gli restano due cose: rivedere la coda
+  (`/rivedi-proposte`, segnalata da `/prime`) e tenere `/commit`/rollback.
+- **Deployment host-agnostico.** Il design non sceglie l'host (NAS, server, VM):
+  serve solo che qualcuno faccia da **storage** (una copia viva della cartella +
+  snapshot) e da **compute** (processo always-on che serve la dashboard in rete).
+  Due backup complementari: snapshot filesystem per il disaster recovery, git sotto
+  `/commit` per rollback logico e attribuzione. La dashboard resta di default su
+  `127.0.0.1`; la LAN è opt-in (`AIOS_DASHBOARD_HOST`), e chi la raggiunge può
+  lanciare i comandi dell'AIOS: rete aziendale sì, rete aperta no.
+
 Le due sono speculari: DOE evita l'errore di *esecuzione*, `/challenge` l'errore di
 *giudizio confidente*.
 
@@ -267,23 +311,8 @@ tra una sessione e l'altra:
   mai promosse automaticamente). Ad ogni `/prime`, `aios-learn` propone anche
   **prospettive proattive** — angoli nuovi e rischi non ancora nominati, distinti
   dai fatti. In sessione ogni cattura chiede conferma: mai scrittura silenziosa.
-  Con più operatori il gate si sposta (vedi sotto).
-
-**Più operatori, un solo cervello.** Quando l'AIOS è condiviso, gli operatori lo
-arricchiscono da `/contribuisci` (bottone della dashboard) senza mai editare file
-a mano. In quella modalità nessuno è presente a confermare, quindi la conferma si
-sposta dalle scritture alle sole **contraddizioni**: il contributo che non
-contraddice il core entra da solo nelle lezioni con autore e data, quello che lo
-contraddice va in `enrichment/proposals/` e aspetta il curatore
-(`/rivedi-proposte`). Un file per contributo, mai una scrittura concorrente sullo
-stesso file.
-
-**Deployment.** Il design non sceglie l'host (NAS, server aziendale, VM): serve
-solo che qualcuno faccia da **storage** (una copia viva della cartella + snapshot)
-e da **compute** (processo always-on che serve la dashboard in rete). Backup a due
-livelli complementari: snapshot filesystem per il disaster recovery, git sotto
-`/commit` per rollback logico e attribuzione. La dashboard di default resta su
-`127.0.0.1`: l'apertura in LAN è opt-in (`AIOS_DASHBOARD_HOST`).
+  Quando l'AIOS è condiviso da più operatori il gate si sposta — vedi
+  [Più operatori](#più-operatori-arricchire-laios-insieme).
 
 Questi tre pezzi mappano la "memoria episodica" (log), la "memoria semantica"
 (contesto datato) e la "memoria procedurale" (lezioni apprese via `aios-learn`) di

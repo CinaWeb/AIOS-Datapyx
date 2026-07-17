@@ -49,6 +49,8 @@ scrivi `/aios`. Da lì ti guido livello per livello.
 | `/challenge` | "Avvocato del diavolo": stressa una diagnosi/decisione prima di agire |
 | `/dashboard` | Apre il pannello visivo |
 | `/debrief` | A fine sessione: consolida i progressi del giorno nel contesto |
+| `/contribuisci <chi sei>: <cosa hai notato>` | Per gli operatori: aggiunge al cervello dell'AIOS ciò che si impara sul campo |
+| `/rivedi-proposte` | Per il curatore: rivede i contributi in disaccordo col contesto |
 | `/commit` | Salva e versiona (se InfraOS attivo) |
 | `/aios-help` | Questo aiuto |
 

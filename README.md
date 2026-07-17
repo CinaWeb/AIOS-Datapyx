@@ -27,7 +27,7 @@ Automazioni → Controllo**.
 
 ## Cosa contiene
 
-**9 skill + 1 motore interno (`aios-learn`) + 4 comandi (`/challenge`, `/aios-help`, `/debrief`, `/client-brief`).** Entry point:
+**9 skill + 1 motore interno (`aios-learn`) + 6 comandi (`/challenge`, `/aios-help`, `/debrief`, `/client-brief`, `/contribuisci`, `/rivedi-proposte`).** Entry point:
 - **`aios`** — orchestratore: rileva lo stato, mantiene una checklist persistente
   (`.claude/aios-build.md`) e un registro lavori trasversale (`.claude/log.md`),
   esegue i 5 livelli in ordine invocando le skill sotto.
@@ -60,8 +60,22 @@ Motore interno (non esposto come comando):
   `/prime`) o in feedback di processo sul prodotto
   (`.claude/aios-feedback-prodotto.md`, per il maintainer), e ad ogni `/prime`
   genera **prospettive proattive**. Invocato internamente da `challenge`,
-  `debrief`, `datapyx`, dai livelli e da `/prime` — mai scrittura silenziosa
-  (chiede sempre conferma).
+  `debrief`, `datapyx`, dai livelli e da `/prime` — in sessione non scrive mai in
+  silenzio (chiede sempre conferma).
+
+Arricchimento multi-operatore:
+- **`/contribuisci`** — un operatore (dalla dashboard, headless) invia un fatto o
+  una regola vista sul campo. `aios-learn` lo classifica e lo confronta col core:
+  se **non contraddice** entra da solo in `.claude/context/lezioni.md`, con autore
+  e data; se **contraddice** finisce in `enrichment/proposals/`, senza toccare
+  niente.
+- **`/rivedi-proposte`** — il curatore rivede la coda dei contraddittori:
+  promuovi / rifiuta / riformula. È l'unico punto dove serve un umano: il resto
+  fluisce. `/prime` segnala quante proposte sono in attesa.
+
+Il core strategico (`azienda.md`, `strategia.md`, `procedure.md`) resta
+scrivibile **solo dal curatore**: l'arricchimento automatico atterra sempre sullo
+strato lezioni, che è progettato per crescere.
 
 Dipendenze di brand (incluse per self-containment):
 - **`client-project-kickoff`** — scaffolding + brand identity (estrae da sito o
@@ -74,6 +88,7 @@ aios → aios-context, aios-data, aios-intel, aios-automation, aios-dashboard
 aios-context → client-project-kickoff → brandkit
 aios ─(offre dopo il Contesto)→ datapyx   [diagnostica trasversale, ripetibile]
 challenge, debrief, datapyx, i 5 livelli, /prime ─→ aios-learn   [motore interno]
+/contribuisci, /rivedi-proposte ─→ aios-learn   [modalità operatore, async]
 ```
 Le skill si richiamano **per nome/descrizione**: funzionano anche namespaced come
 `aios:aios-context`.
@@ -250,7 +265,24 @@ tra una sessione e l'altra:
   prodotto vanno in `.claude/aios-feedback-prodotto.md` (revisione del maintainer,
   mai promosse automaticamente). Ad ogni `/prime`, `aios-learn` propone anche
   **prospettive proattive** — angoli nuovi e rischi non ancora nominati, distinti
-  dai fatti. Ogni cattura chiede conferma: mai scrittura silenziosa.
+  dai fatti. In sessione ogni cattura chiede conferma: mai scrittura silenziosa.
+  Con più operatori il gate si sposta (vedi sotto).
+
+**Più operatori, un solo cervello.** Quando l'AIOS è condiviso, gli operatori lo
+arricchiscono da `/contribuisci` (bottone della dashboard) senza mai editare file
+a mano. In quella modalità nessuno è presente a confermare, quindi la conferma si
+sposta dalle scritture alle sole **contraddizioni**: il contributo che non
+contraddice il core entra da solo nelle lezioni con autore e data, quello che lo
+contraddice va in `enrichment/proposals/` e aspetta il curatore
+(`/rivedi-proposte`). Un file per contributo, mai una scrittura concorrente sullo
+stesso file.
+
+**Deployment.** Il design non sceglie l'host (NAS, server aziendale, VM): serve
+solo che qualcuno faccia da **storage** (una copia viva della cartella + snapshot)
+e da **compute** (processo always-on che serve la dashboard in rete). Backup a due
+livelli complementari: snapshot filesystem per il disaster recovery, git sotto
+`/commit` per rollback logico e attribuzione. La dashboard di default resta su
+`127.0.0.1`: l'apertura in LAN è opt-in (`AIOS_DASHBOARD_HOST`).
 
 Questi tre pezzi mappano la "memoria episodica" (log), la "memoria semantica"
 (contesto datato) e la "memoria procedurale" (lezioni apprese via `aios-learn`) di
@@ -280,6 +312,9 @@ skill) lo gestisce Claude Code nativamente.
 ├── automations/
 │   ├── roadmap.md                  # opportunità + stato (con created:/updated:)
 │   └── <nome>/                     # script delle automazioni
+├── enrichment/
+│   └── proposals/                  # contributi che contraddicono il core, in attesa
+│                                     #   del curatore (/rivedi-proposte) — un file per proposta
 ├── dashboard/                      # server.py + index.html
 └── .env                            # chiavi API/segreti (git-ignorato)
 ```

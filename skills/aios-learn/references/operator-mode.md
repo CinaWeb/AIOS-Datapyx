@@ -135,5 +135,3 @@ riepilogo:
 
 Se non ce ne sono, o se `enrichment/` non esiste, non dire nulla. È una
 segnalazione, non una cattura: nessun HITL.
-</content>
-</invoke>

@@ -27,9 +27,10 @@ Un piccolo server HTTP che:
   comandi dell'AIOS. Nessuna autenticazione: il perimetro è la rete (LAN
   aziendale), non il server.
 - **Allowlist**: costruisci la lista dei comandi leggendo `.claude/commands/*.md`
-  all'avvio, e aggiungi **`/contribuisci`** (comando plugin-level: non sta in
-  `.claude/commands/` ma è eseguibile da `claude -p` perché il plugin è
-  installato). `/run` accetta **solo** un indice/nome presente in quella lista. Non
+  all'avvio, e aggiungi **`/contribuisci`** solo se costruisci il blocco
+  Contribuisci (comando plugin-level: non sta in `.claude/commands/` ma è
+  eseguibile da `claude -p` perché il plugin è installato). `/run` accetta **solo**
+  un indice/nome presente in quella lista. Non
   passare mai a shell input libero dell'utente come comando. Se aggiungi un campo
   follow-up, invialo come **argomento/prompt** a `claude -p` (che è l'AI del
   cliente), non concatenato in una shell: usa `subprocess.run([...], shell=False)`

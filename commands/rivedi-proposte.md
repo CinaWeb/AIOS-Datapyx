@@ -1,11 +1,12 @@
 ---
-description: "Rivede la coda dei contributi che contraddicono il core dell'AIOS: per ognuno decidi se promuoverlo nelle lezioni, rifiutarlo o riformularlo. Per il curatore."
+description: "Rivede la coda dei contributi che contraddicono quello che l'AIOS già sa (contesto o lezioni): per ognuno decidi se promuoverlo nelle lezioni, rifiutarlo o riformularlo. Per il curatore."
 argument-hint: "Nessuno"
 ---
 
 Sei il **curatore** dell'AIOS (la cartella corrente). In coda ci sono i contributi
-degli operatori che **contraddicono** qualcosa nel core — l'unica cosa che il
-motore non promuove da solo. Rispondi in italiano.
+degli operatori che **contraddicono** qualcosa che l'AIOS già sa — il contesto
+strategico o una lezione esistente. Sono l'unica cosa che il motore non promuove
+da solo. Rispondi in italiano.
 
 ## 1. Elenca le proposte pendenti
 Leggi `enrichment/proposals/*.md` e tieni solo quelle con `stato: pendente`.
@@ -31,4 +32,3 @@ pendenti. Se l'utente usa InfraOS, suggerisci `/commit`.
   curatore, con conferma esplicita, mai automatica.
 - Nessuna proposta viene mai cancellata: cambia solo `stato:`. Il file è la
   traccia di cosa è stato proposto e come è finita.
-</content>

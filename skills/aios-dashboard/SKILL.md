@@ -41,12 +41,11 @@ dashboard/
   funnel, automazioni, ultimi meeting, overview). Sezioni assenti → omesse.
 - **Launcher**: un bottone per ogni comando in `.claude/commands/`. Al click
   esegue `claude -p "<comando>"` nella cartella del cliente e mostra l'output.
-- **Contribuisci**: un blocco dedicato con campo testo + campo **operatore**, che
-  lancia il comando plugin-level `/contribuisci` (vedi sotto).
+- **Contribuisci**: solo se la dashboard è condivisa — vedi §2b.
 - **Sicurezza (non negoziabile):** il server ascolta di **default** solo su
   `127.0.0.1`; il campo dei comandi eseguibili è una **allowlist** (i comandi
-  scoperti in `.claude/commands/` + `/contribuisci`), mai input arbitrario
-  dall'esterno. Vedi build-guide.
+  scoperti in `.claude/commands/`, più `/contribuisci` se costruisci il blocco di
+  §2b), mai input arbitrario dall'esterno. Vedi build-guide.
 
 ### 2b. Multi-operatore (se il cliente ha più operatori)
 Chiedilo: *"la dashboard la userai solo tu, o anche altre persone?"*. Se è

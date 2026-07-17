@@ -65,13 +65,14 @@ Motore interno (non esposto come comando):
 
 Arricchimento multi-operatore:
 - **`/contribuisci`** — un operatore (dalla dashboard, headless) invia un fatto o
-  una regola vista sul campo. `aios-learn` lo classifica e lo confronta col core:
-  se **non contraddice** entra da solo in `.claude/context/lezioni.md`, con autore
-  e data; se **contraddice** finisce in `enrichment/proposals/`, senza toccare
-  niente.
+  una regola vista sul campo. `aios-learn` lo classifica e lo confronta con quello
+  che l'AIOS già sa (core strategico + lezioni): se **non contraddice** entra da
+  solo in `.claude/context/lezioni.md`, con autore e data; se **contraddice**
+  finisce in `enrichment/proposals/`, senza toccare niente.
 - **`/rivedi-proposte`** — il curatore rivede la coda dei contraddittori:
-  promuovi / rifiuta / riformula. È l'unico punto dove serve un umano: il resto
-  fluisce. `/prime` segnala quante proposte sono in attesa.
+  promuovi / rifiuta / riformula. È l'unico punto dell'**arricchimento** dove
+  serve un umano: il resto fluisce. `/prime` segnala quante proposte sono in
+  attesa.
 
 Il core strategico (`azienda.md`, `strategia.md`, `procedure.md`) resta
 scrivibile **solo dal curatore**: l'arricchimento automatico atterra sempre sullo
@@ -313,7 +314,7 @@ skill) lo gestisce Claude Code nativamente.
 │   ├── roadmap.md                  # opportunità + stato (con created:/updated:)
 │   └── <nome>/                     # script delle automazioni
 ├── enrichment/
-│   └── proposals/                  # contributi che contraddicono il core, in attesa
+│   └── proposals/                  # contributi in contraddizione col contesto, in attesa
 │                                     #   del curatore (/rivedi-proposte) — un file per proposta
 ├── dashboard/                      # server.py + index.html
 └── .env                            # chiavi API/segreti (git-ignorato)

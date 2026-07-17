@@ -1,6 +1,6 @@
 {
   "name": "aios",
-  "version": "0.5.1",
+  "version": "0.6.0",
   "description": "AI Operating System per aziende/clienti. Orchestratore (aios) + 5 livelli: Contesto (con brand), Dati, Intelligence, Automazioni, Dashboard. Include client-project-kickoff e brandkit per l'identità di brand.",
   "author": {
     "name": "Marco Macelloni",

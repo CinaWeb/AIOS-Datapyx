@@ -1,7 +1,10 @@
 # aios-learn — Guida alla cattura
 
 Dettaglio di classificazione, formati e split per le responsabilità 1, 3 e 4 di
-`aios-learn`. Il protocollo HITL sta in `SKILL.md` e vale sempre.
+`aios-learn`. Il protocollo HITL sta in `SKILL.md` e vale in **modalità
+consulente** — cioè ovunque tranne che nei contributi degli operatori, dove il
+gate è il contradiction-check (`operator-mode.md`). La classificazione e i formati
+qui sotto valgono invece in entrambe le modalità.
 
 ## Classificazione del segnale
 
@@ -55,6 +58,10 @@ L'utente ha segnalato che la domanda su "capacità del team" arriva troppo prest
 prima di aver parlato di clienti attivi — confuso l'ordine logico.
 ```
 
+Se la frizione arriva da un operatore via `/contribuisci`, la fonte è il comando e
+l'autore va sulla stessa riga, come per le lezioni:
+`## [YYYY-MM-DD] fonte: /contribuisci · autore: Marco`.
+
 ## Split di `lezioni.md` per settore
 
 - **Default**: singolo file `.claude/context/lezioni.md`.
@@ -69,5 +76,9 @@ prima di aver parlato di clienti attivi — confuso l'ordine logico.
   porta lo stesso frontmatter `created:`/`updated:`.
 - **Da lì in poi**: ogni nuova lezione va nel file di settore giusto, o in uno
   nuovo se emerge un settore inedito.
+- **In modalità operatore non proporre mai lo split** e non eseguirlo: non c'è
+  nessuno che possa confermarlo. Se la soglia viene superata da un contributo
+  auto-promosso, l'append avviene comunque e lo split resta una decisione del
+  curatore, alla prima sessione utile.
 - `prime.md` non cambia: legge tutto `.claude/context/` (quindi anche
   `lezioni/`), lo split è invisibile al comando.

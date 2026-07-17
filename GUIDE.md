@@ -495,6 +495,42 @@ collegamento tra cose che sapevi ma non avevi messo insieme. Sono spunti per
 pensare, tenuti separati dai fatti — se non ha nulla di utile da dire, non li
 mostra.
 
+### Più persone che arricchiscono lo stesso AIOS
+
+Se l'AIOS è il cervello di un'azienda, chi ci lavora dentro (chi segue la
+comunicazione, chi i lead, chi i post) sa cose che tu non sai. Farli scrivere nei
+file a mano sarebbe il modo più veloce per rompere tutto. Quindi non lo fanno:
+**dalla dashboard c'è un riquadro "Contribuisci"** dove scrivono chi sono e cosa
+hanno notato (*"i lead da fiera vanno richiamati entro 48h o si raffreddano"*), e
+il resto lo fa Claude.
+
+Cosa succede al contributo:
+
+- **Se non contraddice** quello che l'AIOS già sa → finisce **subito** nelle
+  lezioni, firmato con nome e data. Nessuno deve approvare niente: l'operatore ha
+  aggiunto un pezzo e via.
+- **Se contraddice** il contesto (dice il contrario della strategia, di un numero,
+  di una procedura) → **non entra**. Va in una coda (`enrichment/proposals/`) e
+  aspetta te. A ogni `/prime` Claude ti dice *"2 proposte in attesa"*, e con
+  **`/rivedi-proposte`** le vedi una alla volta: per ognuna scegli se promuoverla,
+  rifiutarla o riscriverla meglio.
+
+Il tuo lavoro si riduce a quello: guardare i disaccordi. Tutto il resto scorre da
+solo. E il **core** — chi è l'azienda, la strategia, le procedure — non lo tocca
+mai nessun contributo automatico: quello resta roba tua.
+
+A volte il conflitto ti dirà che ad avere ragione è l'operatore e non il file:
+succede, vuol dire che la strategia è cambiata e nessuno l'ha scritto. Claude te
+lo fa notare e ti propone di aggiornare il contesto.
+
+**La dashboard va aperta agli altri.** Di default sta su `127.0.0.1`, cioè la vedi
+solo tu su quel computer. Per farla raggiungere dagli altri in ufficio, chi la
+avvia imposta `AIOS_DASHBOARD_HOST=0.0.0.0` (e volendo `AIOS_DASHBOARD_PORT`).
+Attenzione: chiunque arrivi a quella pagina può lanciare i comandi dell'AIOS — va
+bene sulla rete dell'ufficio, non su una rete aperta. E perché la cosa funzioni
+davvero, la cartella dev'essere **una sola, viva, in un posto sempre acceso** (un
+NAS, un server, una VM): non una copia per computer, o tornano i silos.
+
 ---
 
 ## 6. Aggiornare, riprendere, più macchine
@@ -573,6 +609,9 @@ Studio Rossi/                        ← la cartella = l'AIOS del cliente
 ├── automations/
 │   ├── roadmap.md                   # elenco automazioni + stato
 │   └── <nome>/                      # gli script di ogni automazione
+├── enrichment/
+│   └── proposals/                   # contributi in disaccordo col contesto, in attesa
+│                                      #   che tu li riveda (/rivedi-proposte)
 ├── dashboard/                       # server.py + index.html (il pannello)
 └── .env                             # password e chiavi (mai condiviso)
 ```

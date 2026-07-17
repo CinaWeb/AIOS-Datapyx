@@ -16,14 +16,36 @@ Un piccolo server HTTP che:
    working dir del cliente con `subprocess`, ritorna stdout/stderr.
 
 ### Sicurezza (obbligatoria)
-- **Bind solo su `127.0.0.1`.** Mai `0.0.0.0` di default.
+- **Bind su `127.0.0.1` di default**, mai `0.0.0.0` come default. L'apertura in
+  rete è **opt-in esplicito** di chi avvia il server, non una scelta tua:
+  ```python
+  host = os.environ.get("AIOS_DASHBOARD_HOST", "127.0.0.1")
+  port = int(os.environ.get("AIOS_DASHBOARD_PORT", "8787"))
+  ```
+  Se `host` non è `127.0.0.1`, stampa all'avvio una riga che avvisa che la
+  dashboard è raggiungibile in rete e che chiunque la raggiunga può lanciare i
+  comandi dell'AIOS. Nessuna autenticazione: il perimetro è la rete (LAN
+  aziendale), non il server.
 - **Allowlist**: costruisci la lista dei comandi leggendo `.claude/commands/*.md`
-  all'avvio. `/run` accetta **solo** un indice/nome presente in quella lista. Non
+  all'avvio, e aggiungi **`/contribuisci`** solo se costruisci il blocco
+  Contribuisci (comando plugin-level: non sta in `.claude/commands/` ma è
+  eseguibile da `claude -p` perché il plugin è installato). `/run` accetta **solo**
+  un indice/nome presente in quella lista. Non
   passare mai a shell input libero dell'utente come comando. Se aggiungi un campo
   follow-up, invialo come **argomento/prompt** a `claude -p` (che è l'AI del
   cliente), non concatenato in una shell: usa `subprocess.run([...], shell=False)`
   con lista di argomenti, mai `shell=True`.
 - Scegli una porta locale libera (es. 8787) e comunicala.
+
+### Blocco "Contribuisci" (dashboard condivisa)
+Se il cliente ha più operatori (vedi SKILL.md §2b):
+- campo **operatore** ("chi sei", salvato in `localStorage`, non richiesto ogni
+  volta) + **textarea** del contributo;
+- al submit: `subprocess.run(["claude", "-p", f"/contribuisci {operatore}: {testo}"],
+  cwd=..., shell=False)`. Il testo dell'operatore resta un **argomento**, mai
+  concatenato in una shell;
+- mostra l'output in pagina: l'operatore deve vedere se il contributo è stato
+  promosso o messo in coda, altrimenti scrive nel vuoto.
 
 ### Esecuzione comando
 `subprocess.run(["claude", "-p", comando], cwd=<working_dir>, capture_output=True,

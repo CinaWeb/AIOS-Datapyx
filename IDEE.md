@@ -65,24 +65,10 @@ riordinare.
 
 ## 2026-07-25
 
-Le tre voci qui sotto vengono da un confronto fatto in FullBrain fra l'AIOS di
+Le due voci qui sotto vengono da un confronto fatto in FullBrain fra l'AIOS di
 Fontanel (da cui questo plugin parte) e quattro fonti sull'Agentic OS ingerite il
 2026-07-25 — Chase AI (4 livelli), Jack Roberts (5), Nufar Gaspar (7), paper
 agiresearch. Riferimento: `wiki/queries/aios-fontanel-vs-altre-fonti.md`.
-
-- **Postura sui permessi verso i sistemi esterni (livello «Connections»)** — oggi
-  assente: cercando `MCP`, `read-only`, `permessi` nel plugin non c'è nulla, a
-  parte le tre zone di scrittura del multi-operatore (che è governance fra
-  operatori, non sicurezza verso l'esterno). Eppure `aios-intel` chiama le API dei
-  tool di meeting, `aios-data` legge CRM/Sheet/PayPal e le automazioni scrivono.
-  La gestione dei **segreti** è già corretta (`.env` git-ignorato, mai in chat o
-  nel DB); manca la scelta degli **scope**: chiedere prima accesso in sola
-  lettura, aggiungere la scrittura solo dopo aver osservato il comportamento.
-  Da aggiungere anche in `aios-automation` la regola che un'automazione produce
-  **bozze da rivedere** e non output che partono verso terzi senza approvazione
-  (caso concreto: `invoice create` che manda la fattura al cliente). Costo:
-  testo nei prompt di 2-3 skill, nessuna infrastruttura. Fonte: Gaspar (livello 5
-  e 7). Stato: da valutare.
 
 - **`/aios-check` — verifica di salute dell'AIOS** — `/challenge` fa red-team di
   un *giudizio*, ma nulla controlla lo stato del **sistema**. Gaspar: senza audit

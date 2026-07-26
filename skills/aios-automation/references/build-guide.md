@@ -36,6 +36,9 @@ Come costruire UNA automazione dopo che l'utente ha confermato. Ogni automazione
    `aios-context`, § connessioni esterne). Se esiste già, aggiungi la riga e
    aggiorna `updated:`.
 
+   Se `.claude/` è protetta in scrittura e il tuo tool viene bloccato, non
+   aggirare il blocco dalla shell: dillo e stampa il contenuto da copiare.
+
    Scrivere in un sistema esterno **non è** comunicare verso terzi: aggiornare un
    campo nel CRM o marcare una fattura come pagata richiede lo scope
    `scrittura` registrato, non la regola delle bozze qui sotto.
@@ -77,17 +80,31 @@ tre tracce:
   2026-07-28 da Marco.
 ```
 
-3. un avviso nella direttiva `.claude/commands/<nome>.md`, subito
-   **dopo** il frontmatter, come prima riga del corpo — i comandi hanno il
-   frontmatter YAML in cima e metterlo prima lo invaliderebbe:
+3. l'avvertenza nella direttiva `.claude/commands/<nome>.md`, in **due punti**:
+   - nel campo `description:` del frontmatter, perché è quello che si legge
+     **nel menu dei comandi**, prima ancora di aprire il file;
+   - nel corpo, con la **data** della deroga e il rimando a
+     `.claude/context/connessioni.md`.
+
+   Non c'è una formula obbligatoria: conta il risultato — chi apre quel comando
+   fra sei mesi deve capire **in tre secondi** che manda davvero qualcosa fuori,
+   quando è stato deciso e dove sta scritto il perimetro. Esempio di com'è
+   venuta bene:
 
 ```markdown
-> ⚠️ Invio automatico verso destinatari esterni — deroga del 2026-07-28.
-> Vedi `.claude/context/connessioni.md`.
+---
+description: Sollecita i preventivi fermi da 7+ giorni — le mail partono davvero, senza rilettura
+---
+
+# /follow-up
+
+Manda una mail di sollecito ai clienti […]. **Le mail partono senza che
+l'utente le rilegga**: è una deroga esplicita, concessa il 2026-07-26 e
+registrata in `.claude/context/connessioni.md`.
 ```
 
-L'avviso nella direttiva serve a chi rileggerà il comando fra sei mesi: deve
-capire in tre secondi che quel comando manda davvero.
+   Attenzione a dove finisce l'avvertenza nel corpo: il frontmatter YAML sta in
+   cima e comincia a riga 1. Qualunque cosa messa prima lo invalida.
 
 Il primo test di un'automazione con deroga non va verso il destinatario
 esterno: usa un destinatario interno o tieni l'invio disattivato. L'invio

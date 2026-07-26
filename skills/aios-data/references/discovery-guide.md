@@ -53,4 +53,7 @@ sezione `## Sorgenti collegate` con l'intestazione di tabella
 skill `aios-context`, § connessioni esterne). Se esiste già, aggiungi la riga e
 aggiorna `updated:`.
 
+Se `.claude/` è protetta in scrittura e il tuo tool viene bloccato, non aggirare
+il blocco dalla shell: dillo e stampa il contenuto da copiare.
+
 Poi passa al **Piano** (step 3 della skill): sorgenti + schema + file, con conferma.

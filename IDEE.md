@@ -300,3 +300,72 @@ base giuridica al momento in cui si costruisce l'automazione di outreach, la
 revisione umana prima della pubblicazione) — così il percorso conforme è quello
 naturale. Stato: da valutare, insieme alla voce «livello compliance».
 
+## 2026-07-26 — follow-up dalla review di v0.7.0
+
+Rilievi emersi dalla review finale del branch `feat/permessi-e-bozze` (PR #9,
+mergiata) e giudicati **non bloccanti** per il rilascio. I cinque problemi seri
+sono stati corretti prima del merge; questi restano. Non sono bug: sono punti in
+cui la regola è scritta in modo che potrebbe non scattare, o in cui il testo dice
+meno di quanto servirebbe.
+
+### Dove la regola potrebbe non scattare
+
+- **`aios-automation`, sezione «Automazioni di contenuto»** — è il capitolo che
+  Claude legge proprio quando costruisce le automazioni a destinatario esterno
+  (blog, newsletter, social, comunicazioni esterne), e non rimanda alla nuova
+  sezione sulle bozze. Mezza riga di rimando nel punto di massima resa.
+- **Il carve-out sul test reale sta solo nel blocco deroga** — il passo che
+  impone il «test reale» (`aios-automation/SKILL.md` §6 e `build-guide.md` passo
+  5) non lo richiama. Stessa dinamica «scritto due passi prima» già corretta
+  altrove, in forma più tenue.
+- **Il fallback «se il file non esiste» sta dentro il passo 3, che è saltabile**
+  («salta questo passo per automazioni che lavorano solo su `database.db` e file
+  locali»). La seconda menzione di `connessioni.md`, nel blocco deroga, non ha
+  fallback. Il controllo `grep -c` della verifica statica conta per file, non per
+  menzione: maschera esattamente questo caso.
+
+### Dove il testo dice meno di quanto servirebbe
+
+- **«Il probe verifica *cosa può fare* la credenziale» non dice come.** Per la
+  maggior parte delle API lo scope non è ispezionabile da uno script: non c'è un
+  endpoint di introspezione. Così com'è, l'istruzione invita a un'asserzione non
+  verificabile — proprio ciò che la disciplina DOE del plugin vieta. Da
+  riformulare: chiedilo all'utente, verificalo solo se l'API lo permette, e
+  annota che è dichiarato.
+- **Canali senza il concetto di «bozza»** — WhatsApp, Slack esterno, un webhook
+  verso un partner, un blog. La sezione enumera bozza Gmail / PDF / record, ma
+  non definisce il fallback: produrre il contenuto in file o record e lasciare
+  l'invio come secondo gesto.
+- **Effetto collaterale della regola sugli scope non separabili** — una chiave a
+  pieni poteri usata in sola lettura ora si registra come `scrittura`, quindi la
+  frase «chiedi la scrittura solo quando serve, e fattelo confermare» può
+  scattare a vuoto su quella sorgente. Da chiarire.
+- **La struttura canonica in `aios-context` è più povera di ciò che le tre skill
+  istruiscono a creare**: non mostra frontmatter né titolo, e non definisce le
+  colonne `Usata da` e `Dal` — che infatti contengono cose eterogenee (nomi di
+  skill per i livelli 2 e 3, nomi di comando per il livello 4). Chi crea il file
+  leggendo solo la sezione canonica produce un artefatto diverso da chi legge una
+  delle tre fette.
+
+### Idea nuova emersa dalla review
+
+- **La dashboard non distingue i comandi con deroga.** `aios-dashboard` genera un
+  bottone per ogni `.claude/commands/*.md`: un `/invia-preventivo` con invio
+  automatico attivo appare come qualunque altro bottone, cliccabile da un
+  collaboratore non tecnico. Era fuori scope dichiarato del design, ma è il
+  candidato naturale per `/aios-check` (voce del 25/7): «quali comandi mandano
+  davvero qualcosa all'esterno, e chi può premerli».
+
+### Cosmetici
+
+`connessioni.md` non compare negli schemi di cartella di README e GUIDE, pur
+essendo presentato nel README come «lo stato corrente di cosa l'AIOS può fare
+fuori» · le date d'esempio sono letterali (`2026-07-26`, `2026-07-28`) mentre il
+resto del plugin usa il placeholder `YYYY-MM-DD`, con un piccolo rischio di copia
+alla lettera · `aios-automation/SKILL.md` cita `build-guide.md` come nome nudo
+dove altrove usa `references/build-guide.md` · la sezione nuova del README è
+finita sotto il titolo «Le due discipline», che di discipline ne annuncia due ·
+il titolo in GUIDE «**Cosa non fa mai da sola**» dice «mai» mentre il corpo
+ammette subito la deroga, ed è l'unica riga che un lettore non tecnico si
+ricorderà.
+

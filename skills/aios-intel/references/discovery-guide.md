@@ -47,6 +47,7 @@ Se il file non esiste, crealo con il frontmatter `created:`/`updated:`, la
 sezione `## Sorgenti collegate` con l'intestazione
 `| Sorgente | Usata da | Scope | Dal | Note |`, e una sezione
 `## Deroghe all'invio automatico` con `- Nessuna.` (struttura canonica: skill
-`aios-context`, § connessioni esterne).
+`aios-context`, § connessioni esterne). Se esiste già, aggiungi la riga e
+aggiorna `updated:`.
 
 Poi passa al **Piano** (step 3 della skill): tool, schema, file, `.env`.

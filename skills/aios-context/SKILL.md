@@ -117,7 +117,10 @@ sezione:
 - Nessuna.
 ```
 
-`Scope` ammette due soli valori: **`lettura`** o **`scrittura`**. "Scrittura"
+`Scope` ammette due soli valori: **`lettura`** o **`scrittura`**. Se la
+piattaforma non separa gli scope, in colonna va `scrittura` — è ciò che la
+chiave *può* fare — e nelle note si scrive che è usata in sola lettura. Il file
+dichiara i poteri reali della credenziale, non le intenzioni. "Scrittura"
 significa poter modificare dati nel sistema esterno; **non** significa poter
 comunicare verso terzi. Le automazioni che inviano qualcosa da sole a un
 destinatario esterno stanno solo nella sezione delle deroghe, e ci arrivano una

@@ -33,7 +33,8 @@ Come costruire UNA automazione dopo che l'utente ha confermato. Ogni automazione
    sezione `## Sorgenti collegate` con l'intestazione
    `| Sorgente | Usata da | Scope | Dal | Note |`, e una sezione
    `## Deroghe all'invio automatico` con `- Nessuna.` (struttura canonica: skill
-   `aios-context`, § connessioni esterne).
+   `aios-context`, § connessioni esterne). Se esiste già, aggiungi la riga e
+   aggiorna `updated:`.
 
    Scrivere in un sistema esterno **non è** comunicare verso terzi: aggiornare un
    campo nel CRM o marcare una fattura come pagata richiede lo scope
@@ -76,7 +77,9 @@ tre tracce:
   2026-07-28 da Marco.
 ```
 
-3. un avviso in testa alla direttiva `.claude/commands/<nome>.md`:
+3. un avviso nella direttiva `.claude/commands/<nome>.md`, subito
+   **dopo** il frontmatter, come prima riga del corpo — i comandi hanno il
+   frontmatter YAML in cima e metterlo prima lo invaliderebbe:
 
 ```markdown
 > ⚠️ Invio automatico verso destinatari esterni — deroga del 2026-07-28.
@@ -85,6 +88,10 @@ tre tracce:
 
 L'avviso nella direttiva serve a chi rileggerà il comando fra sei mesi: deve
 capire in tre secondi che quel comando manda davvero.
+
+Il primo test di un'automazione con deroga non va verso il destinatario
+esterno: usa un destinatario interno o tieni l'invio disattivato. L'invio
+reale lo autorizza l'utente separatamente, dopo aver visto l'output.
 
 ## Anatomia di un'automazione (mapping DOE)
 ```

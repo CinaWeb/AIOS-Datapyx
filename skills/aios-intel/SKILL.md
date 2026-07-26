@@ -77,8 +77,9 @@ data/
   dell'ultimo meeting") per dimostrare l'interrogabilità.
 - Ricorda: i meeting NON entrano nel `/prime` (troppo voluminosi); si interrogano
   a voce libera o con `/catchup`.
-- Registra la sorgente collegata in `.claude/context/connessioni.md` (formato e
-  caso «file assente»: vedi `references/discovery-guide.md`).
+- Verifica che la sorgente collegata sia registrata in
+  `.claude/context/connessioni.md` (formato e caso «file assente»: vedi
+  `references/discovery-guide.md`).
 - Appendi una riga a `.claude/log.md`:
   `- YYYY-MM-DD · aios-intel · Livello 3 Intelligence costruito (connettore <tool>)`.
   Anche `/collect-meetings` appende una riga quando porta nuovi meeting

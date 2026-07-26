@@ -16,6 +16,26 @@ Come costruire UNA automazione dopo che l'utente ha confermato. Ogni automazione
    all'utente invece di costruire sopra un'integrazione non verificata. Salta
    questo passo per automazioni che lavorano solo su `data/database.db` e file
    locali.
+
+   **Con quale scope gira.** Il probe verifica anche *cosa può fare* la
+   credenziale, non solo che funzioni. Il default è la **sola lettura**: chiedi
+   la scrittura solo quando l'automazione deve davvero modificare qualcosa nel
+   sistema esterno, e in quel caso fattelo confermare dall'utente prima di
+   costruire. Registra l'esito in `.claude/context/connessioni.md`:
+
+   ```markdown
+   | Gmail | /invia-preventivo | scrittura | 2026-07-28 | crea bozze |
+   ```
+
+   Se il file non esiste, crealo con il frontmatter `created:`/`updated:`, la
+   sezione `## Sorgenti collegate` con l'intestazione
+   `| Sorgente | Usata da | Scope | Dal | Note |`, e una sezione
+   `## Deroghe all'invio automatico` con `- Nessuna.` (struttura canonica: skill
+   `aios-context`, § connessioni esterne).
+
+   Scrivere in un sistema esterno **non è** comunicare verso terzi: aggiornare un
+   campo nel CRM o marcare una fattura come pagata richiede lo scope
+   `scrittura` registrato, non la regola delle bozze qui sotto.
 4. **Costruisci** — comando + script + tabelle. Riusa `data/database.db` e i file
    di contesto invece di duplicare dati.
 5. **Testa davvero** — esegui l'automazione con dati reali/di prova e mostra

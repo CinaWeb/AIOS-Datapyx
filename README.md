@@ -289,6 +289,22 @@ operatore ──[bottone dashboard]──→ /contribuisci Marco: <cosa ha notat
 Le due sono speculari: DOE evita l'errore di *esecuzione*, `/challenge` l'errore di
 *giudizio confidente*.
 
+### Cosa può toccare l'AIOS fuori di casa
+
+Due default che valgono su tutti i livelli che parlano con sistemi di terzi:
+
+- **Sola lettura finché non serve altro.** Quando un livello collega una sorgente
+  esterna (CRM, foglio, pagamenti, tool di meeting) chiede la chiave in sola
+  lettura; la scrittura si aggiunge solo quando un'automazione deve davvero
+  modificare qualcosa. Ogni collegamento lascia una riga in
+  `.claude/context/connessioni.md`, che è lo stato corrente di cosa l'AIOS può
+  fare fuori.
+- **Verso l'esterno si mandano bozze.** Se l'output di un'automazione è diretto a
+  un cliente, a un fornitore o al pubblico, l'automazione prepara e non spedisce:
+  bozza in Gmail, PDF nella cartella, e l'invio resta un gesto umano. L'invio
+  automatico si può attivare, ma è una deroga: te la fa confermare, la scrive in
+  `connessioni.md` e mette un avviso in testa al comando.
+
 ---
 
 ## Memoria persistente

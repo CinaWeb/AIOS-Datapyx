@@ -338,6 +338,13 @@ La regola: **i calcoli veri li fa lo script, non Claude a mano** — così il nu
 di fattura non "salta" mai. E se qualcosa va storto, Claude **corregge lo script**
 (non aggira il problema) e la volta dopo è più robusto.
 
+**Cosa non fa mai da sola.** Quando l'automazione produce qualcosa diretto a
+qualcuno fuori dall'azienda — un preventivo per un cliente, un post da
+pubblicare — si ferma un passo prima: prepara la bozza e te la lascia da
+rileggere. L'ultimo clic è tuo. Se per un'automazione specifica vuoi che parta da
+sola, si può: te lo fa confermare e lo annota, così resta scritto quali comandi
+mandano davvero qualcosa all'esterno.
+
 > ✅ **Traguardo:** operazioni ripetitive fatte in un comando, con numeri sempre
 > giusti.
 

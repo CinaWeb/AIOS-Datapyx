@@ -5,7 +5,9 @@ Come costruire UNA automazione dopo che l'utente ha confermato. Ogni automazione
 
 ## Passi generali
 1. **Domande di rito** — chiarisci input/output, formato, vincoli, on-demand vs
-   schedulata, casi limite. Non assumere.
+   schedulata, casi limite, e **chi riceve l'output**: resta in azienda (il
+   titolare, il team, un file, il database) o va a qualcuno fuori (un cliente, un
+   fornitore, il pubblico)? Non assumere.
 2. **Approccio** — presenta cosa serve: librerie Python (installa solo il
    necessario), nuove tabelle nel DB, script, template. Conferma.
 3. **Verifica connessioni esterne (se presenti)** — se l'automazione dipende da
@@ -41,6 +43,48 @@ Come costruire UNA automazione dopo che l'utente ha confermato. Ogni automazione
 5. **Testa davvero** — esegui l'automazione con dati reali/di prova e mostra
    l'output.
 6. **Roadmap** — marca l'automazione `✅ fatta` in `automations/roadmap.md`.
+
+## Destinatario esterno: l'automazione si ferma alla bozza
+
+Se l'output di un'automazione è diretto a qualcuno **fuori dall'azienda** —
+cliente, fornitore, pubblico — l'automazione prepara e non spedisce: crea la
+bozza in Gmail, il PDF nella cartella, il record nel database, e l'invio resta un
+gesto umano. Vale anche per la pubblicazione (blog, social): il pubblico è un
+destinatario esterno.
+
+Se il destinatario è interno (il titolare, il team, un file locale, il DB),
+nessun vincolo: l'automazione può fare il suo lavoro fino in fondo.
+
+Esempio di come si svolge:
+
+> — «Vorrei un'automazione che manda il preventivo al cliente dopo la call.»
+> — «Chi lo riceve? Se va al cliente la costruisco così: legge le note della
+> call, genera il preventivo e **lascia la bozza in Gmail** pronta da
+> rileggere. L'invio lo fai tu con un clic. Va bene, o ti serve che parta da
+> sola?»
+
+**Se l'utente vuole l'invio automatico**, si può fare — è una deroga, e lascia
+tre tracce:
+
+1. la sua **conferma esplicita** in sessione (non darla per acquisita da una
+   risposta generica tipo «sì, fai tu»);
+2. una riga in `.claude/context/connessioni.md`, sezione
+   `## Deroghe all'invio automatico`:
+
+```markdown
+- `/invia-preventivo` — invia la mail al cliente senza revisione. Concessa il
+  2026-07-28 da Marco.
+```
+
+3. un avviso in testa alla direttiva `.claude/commands/<nome>.md`:
+
+```markdown
+> ⚠️ Invio automatico verso destinatari esterni — deroga del 2026-07-28.
+> Vedi `.claude/context/connessioni.md`.
+```
+
+L'avviso nella direttiva serve a chi rileggerà il comando fra sei mesi: deve
+capire in tre secondi che quel comando manda davvero.
 
 ## Anatomia di un'automazione (mapping DOE)
 ```

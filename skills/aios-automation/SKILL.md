@@ -94,6 +94,10 @@ data/database.db               # nuove tabelle se l'automazione le richiede
 - Prima di costruire, fai le **domande di rito** sull'automazione (formato,
   vincoli, on-demand vs schedulata) e presenta l'approccio (librerie, tabelle,
   script). Conferma, poi costruisci.
+- Fra le domande di rito c'è **chi riceve l'output**: se il destinatario è fuori
+  dall'azienda l'automazione si ferma alla bozza e l'invio resta un gesto umano.
+  L'invio automatico è possibile come deroga, con conferma esplicita e traccia in
+  `.claude/context/connessioni.md`. Dettaglio e formato in `build-guide.md`.
 - Riusa i moduli esistenti: leggi/scrivi il `data/database.db` di DataOS, usa i
   meeting di IntelOS se rilevante.
 - Segreti solo in `.env`; assicura `.env` in `.gitignore`.

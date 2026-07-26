@@ -117,14 +117,34 @@ sezione:
 - Nessuna.
 ```
 
-`Scope` ammette due soli valori: **`lettura`** o **`scrittura`**. Se la
-piattaforma non separa gli scope, in colonna va `scrittura` — è ciò che la
-chiave *può* fare — e nelle note si scrive che è usata in sola lettura. Il file
-dichiara i poteri reali della credenziale, non le intenzioni. "Scrittura"
-significa poter modificare dati nel sistema esterno; **non** significa poter
-comunicare verso terzi. Le automazioni che inviano qualcosa da sole a un
-destinatario esterno stanno solo nella sezione delle deroghe, e ci arrivano una
-alla volta con il consenso dell'utente.
+`Scope` ammette due soli valori, scritti **esattamente così**: `lettura` oppure
+`scrittura`. Nessuna variante, nessuna aggiunta: non «sola lettura», non
+«lettura e invio», non «read-only». La colonna si legge a colpo d'occhio solo se
+contiene sempre le stesse due parole; le sfumature vanno nelle note.
+
+Come scegliere fra le due:
+
+- **`lettura`** — la credenziale può solo leggere.
+- **`scrittura`** — la credenziale può cambiare qualcosa nel sistema esterno.
+  Ci rientra anche **spedire** (una mail che parte è un'azione sul sistema
+  esterno, non una lettura). Ci rientra anche il caso della piattaforma che
+  **non separa gli scope**: se la chiave ha pieni poteri si scrive `scrittura`
+  anche se la usiamo solo per leggere, e nelle note si chiarisce che è usata in
+  sola lettura. Il file dichiara i **poteri reali** della credenziale, non le
+  intenzioni.
+
+Quello che lo `Scope` **non** dice è se qualcosa parte verso terzi senza
+revisione umana: `scrittura` su una casella mail non significa che l'AIOS possa
+mandare messaggi ai clienti. Quello sta solo nella sezione delle deroghe, e ci
+arriva una alla volta con il consenso dell'utente.
+
+**Se `.claude/` è protetta in scrittura.** In alcuni ambienti la cartella è in
+sola lettura e il tuo tool di scrittura viene bloccato. In quel caso **non
+aggirare il blocco** passando dalla shell: dillo esplicitamente, elenca i file
+che avresti scritto e stampane il contenuto perché l'utente lo copi. Una
+protezione decisa dall'ambiente non si scavalca in silenzio, e l'utente deve
+sapere che quei file non ci sono ancora. Vale per tutti i file sotto `.claude/`
+— contesto, comandi, `log.md` — e per ogni skill del plugin.
 
 **Registro lavori `.claude/log.md`.** Se non esiste, crealo con un header
 minimo (`# Log — {{cliente}}` + una riga di spiegazione: append-only, una riga

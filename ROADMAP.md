@@ -63,3 +63,10 @@ default sulle sorgenti, stato delle connessioni in `.claude/context/connessioni.
 e automazioni che si fermano alla bozza quando il destinatario è fuori
 dall'azienda (deroga possibile, ma registrata). Design in
 `docs/superpowers/specs/2026-07-26-permessi-e-bozze-design.md`.
+
+✅ **Collaudato (v0.7.1):** dry-run su un cliente finto — le due regole scattano
+da sole nel punto giusto del flusso e reggono anche sotto vincolo tecnico.
+Verbale in `docs/superpowers/plans/2026-07-26-dry-run-v0.7.0.md`. Le tre
+correzioni che il collaudo ha prodotto (vocabolario dello scope non rispettato
+nell'uso reale, formato dell'avviso di deroga, comportamento quando `.claude/`
+è protetta in scrittura) sono in questa versione.

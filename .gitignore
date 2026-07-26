@@ -4,5 +4,12 @@ node_modules/
 __pycache__/
 BrandKit/
 NeuroMarketing/
-docs/
+# docs/ resta fuori dal repo, tranne spec e piani: servono leggibili da
+# qualunque postazione. Le negazioni devono ignorare i *contenuti* (docs/*),
+# non la cartella (docs/), altrimenti git non ci scende dentro.
+docs/*
+!docs/superpowers/
+docs/superpowers/*
+!docs/superpowers/specs/
+!docs/superpowers/plans/
 tasks/

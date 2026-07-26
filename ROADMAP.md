@@ -57,3 +57,9 @@ Restano da fare, su questo filone:
   caso reale dall'inizio alla fine.
 - **Visibilità repo**: verificare pubblica/privata a seconda di chi deve
   installare il plugin.
+
+✅ **Fatto (v0.7.0):** postura verso i sistemi esterni — sola lettura come
+default sulle sorgenti, stato delle connessioni in `.claude/context/connessioni.md`,
+e automazioni che si fermano alla bozza quando il destinatario è fuori
+dall'azienda (deroga possibile, ma registrata). Design in
+`docs/superpowers/specs/2026-07-26-permessi-e-bozze-design.md`.

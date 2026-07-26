@@ -17,6 +17,9 @@ WebFetch della pagina developer). Verifica:
   transcript**?
 - che **autenticazione** serve (API key, OAuth)? L'utente ce l'ha o può
   generarla facilmente?
+- esiste uno **scope di sola lettura**? IntelOS deve solo scaricare i
+  transcript: se il tool permette di limitare la chiave alla lettura, chiedila
+  così. Se non separa gli scope, dillo all'utente e annotalo.
 - ci sono limiti (rate limit, piano a pagamento richiesto)?
 
 Riporta all'utente cosa hai trovato in modo sintetico, poi decidi:
@@ -32,5 +35,19 @@ Riporta all'utente cosa hai trovato in modo sintetico, poi decidi:
 - **Storico:** vuole importare anche i meeting passati o solo da oggi in avanti?
 - **Persone chiave:** chi sono i collaboratori/clienti ricorrenti? (migliora
   classificazione e sintesi — puoi anche ricavarli da `.claude/context/`).
+
+**Registra la connessione.** Quando il tool è scelto, scrivi la riga in
+`.claude/context/connessioni.md`:
+
+```markdown
+| Fireflies | aios-intel | lettura | 2026-07-26 | chiave in .env |
+```
+
+Se il file non esiste, crealo con il frontmatter `created:`/`updated:`, la
+sezione `## Sorgenti collegate` con l'intestazione
+`| Sorgente | Usata da | Scope | Dal | Note |`, e una sezione
+`## Deroghe all'invio automatico` con `- Nessuna.` (struttura canonica: skill
+`aios-context`, § connessioni esterne). Se esiste già, aggiungi la riga e
+aggiorna `updated:`.
 
 Poi passa al **Piano** (step 3 della skill): tool, schema, file, `.env`.

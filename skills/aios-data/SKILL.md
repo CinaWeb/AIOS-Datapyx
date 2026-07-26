@@ -85,6 +85,9 @@ data/
   dimostrare che Claude può interrogare i dati.
 - Ricorda all'utente: `/prime` a inizio sessione carica anche le metriche;
   `/refresh-data` quando vuole aggiornarle.
+- Verifica che ogni sorgente collegata sia registrata in
+  `.claude/context/connessioni.md` (formato e caso «file assente»: vedi
+  `references/discovery-guide.md`).
 - Appendi una riga a `.claude/log.md`:
   `- YYYY-MM-DD · aios-data · Livello 2 Dati costruito (N sorgenti)` (o, per un
   refresh con cambi di schema, una riga equivalente).

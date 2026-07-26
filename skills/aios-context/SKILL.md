@@ -97,6 +97,35 @@ che tocchi quel file — `aios-data`, `datapyx`…). Stessa convenzione si appli
 `aios-automation`). Non si applica a `.claude/commands/*.md` (SOP statiche, non
 stato aziendale).
 
+**Connessioni esterne — `connessioni.md`.** Quando un livello collega una
+sorgente esterna (CRM, foglio, piattaforma di pagamento, tool di meeting,
+casella mail, gestionale), lo stato di quel collegamento si annota in
+`.claude/context/connessioni.md`. Il file **non si crea qui**: nasce alla prima
+connessione, per mano di `aios-data`, `aios-intel` o `aios-automation`. Questa è
+la struttura canonica — le altre skill la ripetono in breve e citano questa
+sezione:
+
+```markdown
+## Sorgenti collegate
+
+| Sorgente | Usata da | Scope | Dal | Note |
+|---|---|---|---|---|
+| Fireflies | aios-intel | lettura | 2026-07-26 | chiave in .env |
+
+## Deroghe all'invio automatico
+
+- Nessuna.
+```
+
+`Scope` ammette due soli valori: **`lettura`** o **`scrittura`**. Se la
+piattaforma non separa gli scope, in colonna va `scrittura` — è ciò che la
+chiave *può* fare — e nelle note si scrive che è usata in sola lettura. Il file
+dichiara i poteri reali della credenziale, non le intenzioni. "Scrittura"
+significa poter modificare dati nel sistema esterno; **non** significa poter
+comunicare verso terzi. Le automazioni che inviano qualcosa da sole a un
+destinatario esterno stanno solo nella sezione delle deroghe, e ci arrivano una
+alla volta con il consenso dell'utente.
+
 **Registro lavori `.claude/log.md`.** Se non esiste, crealo con un header
 minimo (`# Log — {{cliente}}` + una riga di spiegazione: append-only, una riga
 per lavoro completato). Al termine di questo livello, appendi:

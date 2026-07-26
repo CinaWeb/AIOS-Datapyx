@@ -5,7 +5,9 @@ Come costruire UNA automazione dopo che l'utente ha confermato. Ogni automazione
 
 ## Passi generali
 1. **Domande di rito** — chiarisci input/output, formato, vincoli, on-demand vs
-   schedulata, casi limite. Non assumere.
+   schedulata, casi limite, e **chi riceve l'output**: resta in azienda (il
+   titolare, il team, un file, il database) o va a qualcuno fuori (un cliente, un
+   fornitore, il pubblico)? Non assumere.
 2. **Approccio** — presenta cosa serve: librerie Python (installa solo il
    necessario), nuove tabelle nel DB, script, template. Conferma.
 3. **Verifica connessioni esterne (se presenti)** — se l'automazione dipende da
@@ -16,11 +18,80 @@ Come costruire UNA automazione dopo che l'utente ha confermato. Ogni automazione
    all'utente invece di costruire sopra un'integrazione non verificata. Salta
    questo passo per automazioni che lavorano solo su `data/database.db` e file
    locali.
+
+   **Con quale scope gira.** Il probe verifica anche *cosa può fare* la
+   credenziale, non solo che funzioni. Il default è la **sola lettura**: chiedi
+   la scrittura solo quando l'automazione deve davvero modificare qualcosa nel
+   sistema esterno, e in quel caso fattelo confermare dall'utente prima di
+   costruire. Registra l'esito in `.claude/context/connessioni.md`:
+
+   ```markdown
+   | Gmail | /invia-preventivo | scrittura | 2026-07-28 | crea bozze |
+   ```
+
+   Se il file non esiste, crealo con il frontmatter `created:`/`updated:`, la
+   sezione `## Sorgenti collegate` con l'intestazione
+   `| Sorgente | Usata da | Scope | Dal | Note |`, e una sezione
+   `## Deroghe all'invio automatico` con `- Nessuna.` (struttura canonica: skill
+   `aios-context`, § connessioni esterne). Se esiste già, aggiungi la riga e
+   aggiorna `updated:`.
+
+   Scrivere in un sistema esterno **non è** comunicare verso terzi: aggiornare un
+   campo nel CRM o marcare una fattura come pagata richiede lo scope
+   `scrittura` registrato, non la regola delle bozze qui sotto.
 4. **Costruisci** — comando + script + tabelle. Riusa `data/database.db` e i file
    di contesto invece di duplicare dati.
 5. **Testa davvero** — esegui l'automazione con dati reali/di prova e mostra
    l'output.
 6. **Roadmap** — marca l'automazione `✅ fatta` in `automations/roadmap.md`.
+
+## Destinatario esterno: l'automazione si ferma alla bozza
+
+Se l'output di un'automazione è diretto a qualcuno **fuori dall'azienda** —
+cliente, fornitore, pubblico — l'automazione prepara e non spedisce: crea la
+bozza in Gmail, il PDF nella cartella, il record nel database, e l'invio resta un
+gesto umano. Vale anche per la pubblicazione (blog, social): il pubblico è un
+destinatario esterno.
+
+Se il destinatario è interno (il titolare, il team, un file locale, il DB),
+nessun vincolo: l'automazione può fare il suo lavoro fino in fondo.
+
+Esempio di come si svolge:
+
+> — «Vorrei un'automazione che manda il preventivo al cliente dopo la call.»
+> — «Chi lo riceve? Se va al cliente la costruisco così: legge le note della
+> call, genera il preventivo e **lascia la bozza in Gmail** pronta da
+> rileggere. L'invio lo fai tu con un clic. Va bene, o ti serve che parta da
+> sola?»
+
+**Se l'utente vuole l'invio automatico**, si può fare — è una deroga, e lascia
+tre tracce:
+
+1. la sua **conferma esplicita** in sessione (non darla per acquisita da una
+   risposta generica tipo «sì, fai tu»);
+2. una riga in `.claude/context/connessioni.md`, sezione
+   `## Deroghe all'invio automatico`:
+
+```markdown
+- `/invia-preventivo` — invia la mail al cliente senza revisione. Concessa il
+  2026-07-28 da Marco.
+```
+
+3. un avviso nella direttiva `.claude/commands/<nome>.md`, subito
+   **dopo** il frontmatter, come prima riga del corpo — i comandi hanno il
+   frontmatter YAML in cima e metterlo prima lo invaliderebbe:
+
+```markdown
+> ⚠️ Invio automatico verso destinatari esterni — deroga del 2026-07-28.
+> Vedi `.claude/context/connessioni.md`.
+```
+
+L'avviso nella direttiva serve a chi rileggerà il comando fra sei mesi: deve
+capire in tre secondi che quel comando manda davvero.
+
+Il primo test di un'automazione con deroga non va verso il destinatario
+esterno: usa un destinatario interno o tieni l'invio disattivato. L'invio
+reale lo autorizza l'utente separatamente, dopo aver visto l'output.
 
 ## Anatomia di un'automazione (mapping DOE)
 ```

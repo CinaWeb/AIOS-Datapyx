@@ -18,7 +18,10 @@ rate, obiettivi). Parti da quelle: non richiedere ciò che sai già, conferma.
      mano): crea un comando/flow per registrare il dato nel DB.
    - **Connettore API** — solo se la piattaforma espone API *e* l'utente ha già
      le chiavi. Se le API sono complesse o mancano le chiavi, ripiega su
-     import/manuale e segnalalo.
+     import/manuale e segnalalo. Quando guidi la generazione della chiave,
+     chiedila **in sola lettura**: DataOS legge e basta, la scrittura non gli
+     serve. Se la piattaforma non separa gli scope (chiave unica con pieni
+     poteri), dillo all'utente e annotalo nelle note della connessione.
 
 ## Il funnel
 Molte metriche hanno senso solo nel contesto del funnel. Indaga i tre stadi:
@@ -33,5 +36,21 @@ resto come estensione futura.
 ## Domande di chiusura
 - Con che frequenza vuole vedere i dati aggiornati? (per dimensionare il refresh)
 - Ci sono dati sensibili tra questi? (per assicurarsi che restino fuori da git)
+
+## Registra la connessione
+
+Per ogni sorgente esterna che colleghi scrivi una riga in
+`.claude/context/connessioni.md`:
+
+```markdown
+| Sheet vendite | aios-data | lettura | 2026-07-26 | export CSV |
+```
+
+Se il file non esiste, crealo con il frontmatter `created:`/`updated:`, la
+sezione `## Sorgenti collegate` con l'intestazione di tabella
+`| Sorgente | Usata da | Scope | Dal | Note |`, e una sezione
+`## Deroghe all'invio automatico` con la riga `- Nessuna.` (struttura canonica:
+skill `aios-context`, § connessioni esterne). Se esiste già, aggiungi la riga e
+aggiorna `updated:`.
 
 Poi passa al **Piano** (step 3 della skill): sorgenti + schema + file, con conferma.

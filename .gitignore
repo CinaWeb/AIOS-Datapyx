@@ -4,6 +4,13 @@ node_modules/
 __pycache__/
 BrandKit/
 NeuroMarketing/
+MarketingDesignSystem/
+Where to play/
+# Materiale di lavoro locale: ARCHITETTURA.md e' l'architettura di FullBrain
+# (altro progetto), tenuta qui come riferimento; CONFRONTO-ARCHITETTURA.md e'
+# l'analisi del divario. Nessuno dei due documenta questo plugin.
+ARCHITETTURA.md
+CONFRONTO-ARCHITETTURA.md
 # docs/ resta fuori dal repo, tranne spec e piani: servono leggibili da
 # qualunque postazione. Le negazioni devono ignorare i *contenuti* (docs/*),
 # non la cartella (docs/), altrimenti git non ci scende dentro.
